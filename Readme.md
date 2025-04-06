@@ -22,7 +22,7 @@ The features that distinguish Prometheus from other metrics and monitoring syste
 
 ## Architecture overview
 
-![Architecture overview](documentation/images/architecture.svg)
+![Architecture overview](/images-icons/prometheous-architecture.jpg)
 
 ## Install
 
