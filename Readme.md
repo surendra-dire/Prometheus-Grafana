@@ -37,6 +37,14 @@ The features that distinguish Prometheus from other metrics and monitoring syste
 **Node exporter**:   
 Node Exporter is a lightweight agent running on every node which exposes hardware and OS metrics over the HTTP protocol (End point -- > typically at http://<node-ip>:9100/metrics) in a format that Prometheus can scrape.  
 
+**Alert Manager**:   
+Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, and routes them to the appropriate notification channels.
+
+* Grouping: Combines similar alerts to reduce notification noise.
+* Inhibition: Suppresses alerts if others are already firing. 
+* Silencing: Temporarily mutes specific alerts.  
+* Sends notifications to various integrations based on defined rout.
+
 ## Install  
 
 There are various ways of installing Prometheus.
