@@ -24,7 +24,20 @@ The features that distinguish Prometheus from other metrics and monitoring syste
 
 ![Architecture overview](/images-icons/prometheous-architecture.jpg)
 
-## Install
+**Prometheus server**:
+   ** Retrieval**: Pull based mechanism, actively pulls (scrapes) data from target endpoints over HTTP.   
+   
+   ** TSDB**:  TSDB stores data as time series. A sequence of data points over time. Each time series is identified by a metric name and a set of key-value pairs (called labels), along with timestamps for each data point.  
+   
+    **HTTP server**: Enables query (metrices exposed by node exporter over http) and visualize metrics over http, integration with other tools, like Grafana and Alertmanager.  
+    
+    **Node (HDD/SSD)**: Prefers SSD for fast Read/Write Speed, high IOPS (Input/Output per Second) and low Latency.  
+    
+**Node exporter**:   
+
+Node Exporter is a lightweight agent running on every node which exposes hardware and OS metrics over the HTTP protocol (End point -- > typically at http://<node-ip>:9100/metrics) in a format that Prometheus can scrape.  
+
+## Install  
 
 There are various ways of installing Prometheus.
 
