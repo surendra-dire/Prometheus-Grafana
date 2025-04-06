@@ -1,3 +1,5 @@
+![Prometheus Icon](https://raw.githubusercontent.com/surendra-dire/Prometheus-Grafana/main/images-icons/prometheus-icon)
+
 <h1 align="center" style="border-bottom: none">
     <a href="https://prometheus.io" target="_blank"><img alt="Prometheus" src="/documentation/images/prometheus-logo.svg"></a><br>Prometheus
 </h1>
@@ -10,14 +12,14 @@ The features that distinguish Prometheus from other metrics and monitoring syste
 
 ## Main Features
 
-* A **multi-dimensional** data model (time series defined by metric name and set of key/value dimensions)
-* PromQL, a **powerful and flexible query language** to leverage this dimensionality
-* No dependency on distributed storage; **single server nodes are autonomous**
-* An HTTP **pull model** for time series collection
-* **Pushing time series** is supported via an intermediary gateway for batch jobs
-* Targets are discovered via **service discovery** or **static configuration**
-* Multiple modes of **graphing and dashboarding support**
-* Support for hierarchical and horizontal **federation**
+**Multi-dimensional data model**: Time-series data identified by metric name and key-value labels.
+**PromQL**: A powerful query language for flexible data analysis.
+**Autonomous servers**: Single server nodes with no distributed storage dependency.
+**HTTP pull model**: Time-series data is pulled from monitored targets via HTTP.
+**Push support**: Push time-series data via an intermediary gateway for batch jobs.
+**Service discovery**: Automatic target discovery or static configuration.
+**Graphing & dashboarding**: Integrates with tools like Grafana for visualization.
+**Federation**: Supports both hierarchical and horizontal federation for scalability.
 
 ## Architecture overview
 
