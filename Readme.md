@@ -61,6 +61,35 @@ Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Installation and Configuration
 
 There are various ways of installing Prometheus : Precompiled binaries, Docker images, helm charts (for k8s) etc.
@@ -135,6 +164,51 @@ helm install prometheus prometheus-community/prometheus --namespace monitoring
 
 #Access Prometheus Web UI via port forwarding
 kubectl port-forward svc/prometheus-server -n monitoring 9090:80
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
