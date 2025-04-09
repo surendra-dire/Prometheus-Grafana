@@ -262,7 +262,7 @@ The table below compares several observability tools widely used in monitoring a
 | **Integration with Other Tools**         | Integrates with various Azure services           | Integrates with various AWS services             |
 
 
- ## Limitations on PRpmetheous & Grafana
+ ## Limitations on Prometheous & Grafana
 - Limited APM (Application Performance Monitoring - metrics based) Features
 - No Built-In Log Management
 - Manual Instrumentation for Tracing
