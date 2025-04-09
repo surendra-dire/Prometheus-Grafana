@@ -45,8 +45,28 @@ Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, 
 * Silencing: Temporarily mutes specific alerts.  
 * Sends notifications to various integrations based on defined rout.
 
+**Service Discovery**
 
 
+**Pushgateway**
+
+
+**Exporters**
+
+
+**Alert Manager**
+
+
+
+**API Clients**
+
+
+
+**Premetheous targets**
+
+
+
+**Service Discovery**
 
 
 
@@ -170,7 +190,7 @@ kubectl port-forward svc/prometheus-server -n monitoring 9090:80
 
 **Plugins.yaml**:  
 
-
+## Configuration file
 
 ## Observability Basics
 
