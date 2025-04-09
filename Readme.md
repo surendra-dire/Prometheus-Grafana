@@ -50,40 +50,26 @@ Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, 
 There are various ways of installing Prometheus : Precompiled binaries, Docker images, helm charts (for k8s) etc.
 
 ### Precompiled binaries
-
-Precompiled binaries for released versions are available in the
-[*download* section](https://prometheus.io/download/)
-on [prometheus.io](https://prometheus.io). Using the latest production release binary.Download prometheus here [Prometheus Download Page](https://prometheus.io/download/#prometheus)  
+Download the Long-Term Support (LTS) binary, extract it, move the files to the /bin directory, and set up Prometheus to run as a service by creating the Prometheus user and updating the systemd service file. Precompiled binaries for released versions are available in the [*download* section](https://prometheus.io/download/) on [prometheus.io](https://prometheus.io).
  
-- Extract
 ```
+# Extract
 tar xvfz prometheus-*.tar.gz
-```
-- Create two new directories for Prometheus to use. The /etc/prometheus directory stores the Prometheus configuration files. The /var/lib/prometheus directory holds application data.
-```
 sudo mkdir /etc/prometheus /var/lib/prometheus
-```
-- Move to extracted directory 
-```
 cd prometheus*
-```
 
-```
+# Move file into directories
 sudo mv prometheus promtool /usr/local/bin/
 sudo mv prometheus.yml /etc/prometheus/prometheus.yml
 sudo mv consoles/ console_libraries/ /etc/prometheus/
-```
-- Configure prometheus to run as a service
-```
+
+# Configure the prometheous to run as service. Create user.
 sudo useradd -rs /bin/false prometheus
 sudo chown -R prometheus: /etc/prometheus /var/lib/prometheus
-```
-- Create a service file
-```
-sudo vi /etc/systemd/system/prometheus.service
-```
-- Write below data to service file
-```
+
+# Create prometheus service file
+sudo vi /etc/systemd/system/prometheus.service 
+
 [Unit]
 Description=Prometheus
 Wants=network-online.target
@@ -106,83 +92,33 @@ ExecStart=/usr/local/bin/prometheus \
 
 [Install]
 WantedBy=multi-user.target
-```
-- Reload Daemon service and enable prometheus to start post reboot
-```
+
+# Reload Daemon service and enable prometheus to start post reboot
 sudo systemctl daemon-reload
 sudo systemctl enable prometheus
-```
-
-# Managing Prometheus Service
-Use below commands to check status, start or stop Prometheus service.
-```
 sudo systemctl status prometheus
-```
-```
 sudo systemctl start prometheus
-```
-```
-sudo systemctl stop prometheus
 
+# Ensure port 9090 is open in firewall
+```
 ### Docker images
+docker run --name prometheus -d -p 9090:9090 prom/prometheus  
+### Helm charts  
+Helm is a package manager for Kubernetes applications, and Helm charts are the packages containing the manifest files. Helm simplifies the deployment and management of applications within a Kubernetes cluster.  To install Prometheus, the Kubernetes (K8s) cluster should be up and running, and Helm should be installed.  
+#Install Helm  
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash  
+helm version  
 
-Docker images are available on [Quay.io](https://quay.io/repository/prometheus/prometheus) or [Docker Hub](https://hub.docker.com/r/prom/prometheus/).
+#Add the Prometheus Helm Chart Repository  
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts  
+helm repo update  
 
-You can launch a Prometheus container for trying it out with
+#Install Promethous  
+kubectl create namespace monitoring   
+helm install prometheus prometheus-community/prometheus --namespace monitoring    
 
-```bash
-docker run --name prometheus -d -p 127.0.0.1:9090:9090 prom/prometheus
-```
 
-Prometheus will now be reachable at <http://localhost:9090/>.
 
-### Building from source
-
-To build Prometheus from source code, You need:
-
-* Go [version 1.22 or greater](https://golang.org/doc/install).
-* NodeJS [version 22 or greater](https://nodejs.org/).
-* npm [version 8 or greater](https://www.npmjs.com/).
-
-Start by cloning the repository:
-
-```bash
-git clone https://github.com/prometheus/prometheus.git
-cd prometheus
-```
-
-You can use the `go` tool to build and install the `prometheus`
-and `promtool` binaries into your `GOPATH`:
-
-```bash
-GO111MODULE=on go install github.com/prometheus/prometheus/cmd/...
-prometheus --config.file=your_config.yml
-```
-
-*However*, when using `go install` to build Prometheus, Prometheus will expect to be able to
-read its web assets from local filesystem directories under `web/ui/static` and
-`web/ui/templates`. In order for these assets to be found, you will have to run Prometheus
-from the root of the cloned repository. Note also that these directories do not include the
-React UI unless it has been built explicitly using `make assets` or `make build`.
-
-An example of the above configuration file can be found [here.](https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus.yml)
-
-You can also build using `make build`, which will compile in the web assets so that
-Prometheus can be run from anywhere:
-
-```bash
-make build
-./prometheus --config.file=your_config.yml
-```
-
-The Makefile provides several targets:
-
-* *build*: build the `prometheus` and `promtool` binaries (includes building and compiling in web assets)
-* *test*: run the tests
-* *test-short*: run the short tests
-* *format*: format the source code
-* *vet*: check the source code for common errors
-* *assets*: build the React UI
 
 ### Service discovery plugins
 
