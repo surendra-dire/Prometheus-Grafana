@@ -47,16 +47,82 @@ Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, 
 
 ## Installation
 
-There are various ways of installing Prometheus.
+There are various ways of installing Prometheus : Precompiled binaries, Docker images, helm charts (for k8s) etc.
 
 ### Precompiled binaries
 
 Precompiled binaries for released versions are available in the
 [*download* section](https://prometheus.io/download/)
-on [prometheus.io](https://prometheus.io). Using the latest production release binary
-is the recommended way of installing Prometheus.
-See the [Installing](https://prometheus.io/docs/introduction/install/)
-chapter in the documentation for all the details.
+on [prometheus.io](https://prometheus.io). Using the latest production release binary.Download prometheus here [Prometheus Download Page](https://prometheus.io/download/#prometheus)  
+ 
+- Extract
+```
+tar xvfz prometheus-*.tar.gz
+```
+- Create two new directories for Prometheus to use. The /etc/prometheus directory stores the Prometheus configuration files. The /var/lib/prometheus directory holds application data.
+```
+sudo mkdir /etc/prometheus /var/lib/prometheus
+```
+- Move to extracted directory 
+```
+cd prometheus*
+```
+
+```
+sudo mv prometheus promtool /usr/local/bin/
+sudo mv prometheus.yml /etc/prometheus/prometheus.yml
+sudo mv consoles/ console_libraries/ /etc/prometheus/
+```
+- Configure prometheus to run as a service
+```
+sudo useradd -rs /bin/false prometheus
+sudo chown -R prometheus: /etc/prometheus /var/lib/prometheus
+```
+- Create a service file
+```
+sudo vi /etc/systemd/system/prometheus.service
+```
+- Write below data to service file
+```
+[Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/local/bin/prometheus \
+    --config.file /etc/prometheus/prometheus.yml \
+    --storage.tsdb.path /var/lib/prometheus/ \
+    --web.console.templates=/etc/prometheus/consoles \
+    --web.console.libraries=/etc/prometheus/console_libraries \
+    --web.listen-address=0.0.0.0:9090 \
+    --web.enable-lifecycle \
+    --log.level=info
+
+[Install]
+WantedBy=multi-user.target
+```
+- Reload Daemon service and enable prometheus to start post reboot
+```
+sudo systemctl daemon-reload
+sudo systemctl enable prometheus
+```
+
+# Managing Prometheus Service
+Use below commands to check status, start or stop Prometheus service.
+```
+sudo systemctl status prometheus
+```
+```
+sudo systemctl start prometheus
+```
+```
+sudo systemctl stop prometheus
 
 ### Docker images
 
