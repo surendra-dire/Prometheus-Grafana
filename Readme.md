@@ -172,10 +172,10 @@ kubectl port-forward svc/prometheus-server -n monitoring 9090:80
 
 
 
-## Observability Besics
+## Observability Basics
 
-Observability is the ability to understand the internal state of a system by analyzing the data it produces, including logs, metrics, and traces. Monitoring tells us what is happening, Logging explains why it is happening and Tracing shows how it is happening.
-- Monitoring is the *`when and what`* of a system error, and observability is the *`why and how`*
+Monitoring focuses on tracking system health and performance through metrics and alerts, while Observability enables understanding of system behavior  by analyzing the data it produces, including logs, metrics, and traces to diagnose and investigate issues. Monitoring tells us what is happening, Logging explains why it is happening and Tracing shows how it is happening.
+Monitoring is the *`when and what`* of a system error, and observability is the *`why and how`*
 
 | Category       | Monitoring                                   | Observability                                         |
 |----------------|----------------------------------------------|------------------------------------------------------|
