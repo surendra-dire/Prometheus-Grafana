@@ -242,7 +242,7 @@ The table below compares several observability tools widely used in monitoring a
 | **Extensibility**                        | Limited extensibility for integration                | Highly extensible (can integrate with various tools) | Highly extensible (can integrate with various tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (via plugins, exporters, etc.)     |
 
 
- ## Comparison of Observability Tools in Azure vs AWS
+ ## Observability Tools in Azure vs AWS
 
 | **Feature**                              | **Azure**                                            | **AWS**                                              |
 |------------------------------------------|------------------------------------------------------|------------------------------------------------------|
@@ -262,7 +262,7 @@ The table below compares several observability tools widely used in monitoring a
 | **Integration with Other Tools**         | Integrates with various Azure services           | Integrates with various AWS services             |
 
 
- ## Limitations
+ ## Limitations on PRpmetheous & Grafana
 - Limited APM (Application Performance Monitoring - metrics based) Features
 - No Built-In Log Management
 - Manual Instrumentation for Tracing
