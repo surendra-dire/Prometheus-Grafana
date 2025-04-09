@@ -45,7 +45,7 @@ Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, 
 * Silencing: Temporarily mutes specific alerts.  
 * Sends notifications to various integrations based on defined rout.
 
-## Install  
+## Installation
 
 There are various ways of installing Prometheus.
 
