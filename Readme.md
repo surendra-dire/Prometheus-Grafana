@@ -203,15 +203,21 @@ Monitoring is the *`when and what`* of a system error, and observability is the 
 | Data           | Collects metrics like CPU usage, memory usage, and error rates | Collects logs, metrics, and traces to provide a full picture |
 | Alerts         | Sends notifications when something goes wrong| Correlates events and anomalies to identify root causes |
 | Example        | If a server's CPU usage goes above 90%, monitoring will alert us | If a website is slow, observability helps us trace the user's request through different services to find the bottleneck |
-| Insight        | Prometheus, Grafana, Nagios, and Zabbix  | Prometheus, Grafana, Jaeger, Zipkin, and Elasticsearch |
+| Insight        | Identifies potential issues before they become critical  | Helps diagnose issues and understand system behavior |
+| Tools          | Prometheus, Grafana, Nagios, and Zabbix  | Prometheus, Grafana, Jaeger, Zipkin, and Elasticsearch |
 
 
+## Monitoring scenarios
+- Infrastructure: CPU usage, memory usage, disk I/O, network traffic.
+- Applications: Response times, error rates, throughput.
+- Databases: Query performance, connection pool usage, transaction rates.
+- Network: Latency, packet loss, bandwidth usage.
+- Security: Unauthorized access attempts, vulnerability scans, firewall logs.
 
-
-
-
-
-
+## Observability scenarios
+- Logs: Detailed records of events and transactions within the system.
+- Metrics: Quantitative data points like CPU load, memory consumption, and request counts.
+- Traces: Data that shows the flow of requests through various services and components.
 
 
 
