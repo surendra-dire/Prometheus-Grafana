@@ -172,6 +172,18 @@ kubectl port-forward svc/prometheus-server -n monitoring 9090:80
 
 
 
+## Observability Besics
+
+Observability is the ability to understand the internal state of a system by analyzing the data it produces, including logs, metrics, and traces. Monitoring tells us what is happening, Logging explains why it is happening and Tracing shows how it is happening.
+- Monitoring is the *`when and what`* of a system error, and observability is the *`why and how`*
+
+| Category       | Monitoring                                   | Observability                                         |
+|----------------|----------------------------------------------|------------------------------------------------------|
+| Focus          | Checking if everything is working as expected| Understanding why things are happening in the system  |
+| Data           | Collects metrics like CPU usage, memory usage, and error rates | Collects logs, metrics, and traces to provide a full picture |
+| Alerts         | Sends notifications when something goes wrong| Correlates events and anomalies to identify root causes |
+| Example        | If a server's CPU usage goes above 90%, monitoring will alert us | If a website is slow, observability helps us trace the user's request through different services to find the bottleneck |
+| Insight        | Prometheus, Grafana, Nagios, and Zabbix  | Prometheus, Grafana, Jaeger, Zipkin, and Elasticsearch |
 
 
 
