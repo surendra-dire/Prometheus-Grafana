@@ -241,7 +241,12 @@ The table below compares several observability tools widely used in monitoring a
 | Cost | Subscription-based, can be expensive at scale | Free (open-source) but requires management and scaling | Free (open-source) but requires management and scaling | Expensive for large-scale use | Flexible pricing, but can get expensive at scale | Free (Prometheus and Grafana), but infrastructure costs can add up |
 | Extensibility | Limited extensibility for integration | Highly extensible (can integrate with various tools) | Highly extensible (can integrate with various tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (via plugins, exporters, etc.) |
  
-
+## Tools comparison
+- Limited APM (Application Performance Monitoring - metrics based) Features
+- No Built-In Log Management
+- Manual Instrumentation for Tracing
+- Scalability Challenges with High Cardinality Metric
+- Lack of Advanced AI and Anomaly Detection
 
 
 
