@@ -11,14 +11,17 @@ displays the results, and can trigger alerts.
 
 ## Main Features
 
-**Multi-dimensional data model**: Time-series data identified by metric name and key-value labels.  
-**PromQL**: A powerful query language for flexible data analysis.  
-**Autonomous servers**: Single server nodes with no distributed storage dependency.  
-**HTTP pull model**: Time-series data is pulled from monitored targets via HTTP.  
-**Push support**: Push time-series data via an intermediary gateway for batch jobs.  
-**Service discovery**: Automatic target discovery or static configuration.  
-**Graphing & dashboarding**: Integrates with tools like Grafana for visualization.  
-**Federation**: Supports both hierarchical and horizontal federation for scalability.  
+| **Feature**                      | **Description**                                                                 |
+|-----------------------------------|---------------------------------------------------------------------------------|
+| **Multi-dimensional data model**  | Time-series data identified by metric name and key-value labels.                |
+| **PromQL**                        | A powerful query language for flexible data analysis.                           |
+| **Autonomous servers**            | Single server nodes with no distributed storage dependency.                     |
+| **HTTP pull model**               | Time-series data is pulled from monitored targets via HTTP.                     |
+| **Push support**                  | Push time-series data via an intermediary gateway for batch jobs.               |
+| **Service discovery**             | Automatic target discovery or static configuration.                             |
+| **Graphing & dashboarding**       | Integrates with tools like Grafana for visualization.                           |
+| **Federation**                    | Supports both hierarchical and horizontal federation for scalability.          |
+
 
 ## Architecture overview
 
