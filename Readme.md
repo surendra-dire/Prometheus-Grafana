@@ -204,7 +204,7 @@ Monitoring is the *`when and what`* of a system error, and observability is the 
 | Alerts         | Sends notifications when something goes wrong| Correlates events and anomalies to identify root causes |
 | Example        | If a server's CPU usage goes above 90%, monitoring will alert us | If a website is slow, observability helps us trace the user's request through different services to find the bottleneck |
 | Insight        | Identifies potential issues before they become critical  | Helps diagnose issues and understand system behavior |
-| Tools          | Prometheus, Grafana, Nagios, and Zabbix  | Prometheus, Grafana, Jaeger, Zipkin, and Elasticsearch |
+| Tools          | Prometheus, Grafana, Nagios, Zabbix, PRTG  | ELK Stack (Elasticsearch, Logstash, Kibana), EFK Stack (Elasticsearch, FluentBit, Kibana) Splunk, Jaeger, Zipkin, New Relic, Dynatrace, Datadog |
 
 
 ## Monitoring scenarios
@@ -220,6 +220,27 @@ Monitoring is the *`when and what`* of a system error, and observability is the 
 - Traces: Data that shows the flow of requests through various services and components.
 
 
+## Tools comparison
+The table below compares several observability tools widely used in monitoring and troubleshooting
+
+| Feature | New Relic | ELK Stack (Elasticsearch, Logstash, Kibana) | EFK Stack (Elasticsearch, FluentBit, Kibana) | Dynatrace | Datadog | Prometheus + Grafana |
+|---------|-----------|---------------------------------------------|---------------------------------------------|-----------|---------|----------------------|
+| Core Focus | Full-stack observability (APM, metrics, logs, RUM) | Log aggregation, analysis, and visualization | Log aggregation, analysis, and visualization | Full-stack observability (APM, infrastructure monitoring, logs) | Full-stack observability (APM, infrastructure monitoring, logs) | Metrics monitoring and visualization (Prometheus) + Dashboards (Grafana) |
+| Application Performance Monitoring (APM) | Yes (Full APM, Distributed Tracing) | No | No | Yes (Full APM, Distributed Tracing) | Yes (Full APM, Distributed Tracing) | No (Requires additional tools like Jaeger) |
+| Infrastructure Monitoring | Yes (Cloud, on-prem, containers, Kubernetes) | No (Requires separate solution for infra monitoring) | No (Requires separate solution for infra monitoring) | Yes (Cloud, on-prem, containers, Kubernetes) | Yes (Cloud, on-prem, containers, Kubernetes) | Yes (Prometheus for infra metrics) |
+| Distributed Tracing | Yes (Full-stack tracing) | No | No | Yes (Distributed Tracing) | Yes (Distributed Tracing) | No (Requires Jaeger or Zipkin integration) |
+| Log Management | Yes (Integrated log management and analysis) | Yes (Log aggregation, search, and analysis) | Yes (Log aggregation, search, and analysis) | Yes (Integrated logs and metrics) | Yes (Integrated logs and metrics) | No (Requires external solutions like Loki) |
+| Real User Monitoring (RUM) | Yes | No | No | No | Yes | No |
+| Metrics Monitoring | Yes (Comprehensive metrics across infrastructure and application) | No | No | Yes (Comprehensive metrics across infrastructure and application) | Yes (Comprehensive metrics across infrastructure and application) | Yes (Prometheus metrics) |
+| Alerting | Yes (Alert thresholds for metrics and logs) | Yes (Alerting through Kibana or external tools) | Yes (Alerting through Kibana or external tools) | Yes (Alerting with AI-based anomaly detection) | Yes (Alerting with AI-based anomaly detection) | Yes (Alerting through Prometheus or external tools) |
+| Dashboards & Visualizations | Yes (Custom dashboards with metrics, logs, traces) | Yes (Kibana for log visualizations) | Yes (Kibana for log visualizations) | Yes (Custom dashboards, metrics, logs, and traces) | Yes (Custom dashboards, metrics, logs, and traces) | Yes (Grafana dashboards with Prometheus data) |
+| Ease of Use | Easy to deploy, cloud-based, minimal configuration | Complex setup (requires management of Elasticsearch, Logstash, Kibana) | Slightly easier than ELK, but still requires configuration | Easy to deploy, cloud-based, minimal configuration | Easy to deploy, cloud-based, minimal configuration | Requires setup of Prometheus + Grafana, but can be more flexible |
+| Pricing | Subscription-based, flexible pricing model | Free (self-hosted), but infrastructure cost for scaling | Free (self-hosted), but infrastructure cost for scaling | Subscription-based, high cost for large deployments | Subscription-based, flexible pricing model | Free (self-hosted), but infrastructure cost for scaling |
+| Cloud Integration | Yes (AWS, Azure, GCP, etc.) | Yes (via integrations with cloud platforms) | Yes (via integrations with cloud platforms) | Yes (AWS, Azure, GCP, etc.) | Yes (AWS, Azure, GCP, etc.) | Yes (Can integrate with cloud-native solutions) |
+| AI and Machine Learning Insights | Yes (AI-powered insights, anomaly detection) | No | No | Yes (AI-powered insights, anomaly detection) | Yes (AI-powered insights, anomaly detection) | No (Requires additional integrations) |
+| Cost | Subscription-based, can be expensive at scale | Free (open-source) but requires management and scaling | Free (open-source) but requires management and scaling | Expensive for large-scale use | Flexible pricing, but can get expensive at scale | Free (Prometheus and Grafana), but infrastructure costs can add up |
+| Extensibility | Limited extensibility for integration | Highly extensible (can integrate with various tools) | Highly extensible (can integrate with various tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (via plugins, exporters, etc.) |
+ 
 
 
 
