@@ -240,15 +240,48 @@ The table below compares several observability tools widely used in monitoring a
 | AI and Machine Learning Insights | Yes (AI-powered insights, anomaly detection) | No | No | Yes (AI-powered insights, anomaly detection) | Yes (AI-powered insights, anomaly detection) | No (Requires additional integrations) |
 | Cost | Subscription-based, can be expensive at scale | Free (open-source) but requires management and scaling | Free (open-source) but requires management and scaling | Expensive for large-scale use | Flexible pricing, but can get expensive at scale | Free (Prometheus and Grafana), but infrastructure costs can add up |
 | Extensibility | Limited extensibility for integration | Highly extensible (can integrate with various tools) | Highly extensible (can integrate with various tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (via plugins, exporters, etc.) |
- 
-## Limitations
+
+ ## Comparison of Observability Tools in Azure vs AWS
+
+| **Feature**                              | **Azure**                                            | **AWS**                                              |
+|------------------------------------------|------------------------------------------------------|------------------------------------------------------|
+| **Full-Stack Observability**             | **Azure Monitor** + **Azure Application Insights**   | **Amazon CloudWatch** + **AWS X-Ray**                |
+| **Application Performance Monitoring (APM)** | **Azure Application Insights** (Full APM)           | **AWS X-Ray** (Distributed Tracing)                  |
+| **Infrastructure Monitoring**            | **Azure Monitor**                                    | **Amazon CloudWatch** (EC2, Lambda, RDS, etc.)       |
+| **Log Management & Aggregation**         | **Azure Log Analytics**                              | **Amazon OpenSearch Service** + **CloudWatch Logs**  |
+| **Real-Time Log Analysis**               | **Azure Log Analytics**                              | **CloudWatch Logs Insights**                         |
+| **Distributed Tracing**                  | **Azure Application Insights**                       | **AWS X-Ray**                                        |
+| **AI/Anomaly Detection**                 | **Azure Monitor (AI Insights)**                      | **CloudWatch Anomaly Detection**                     |
+| **User Monitoring (RUM)**                | **Azure Application Insights**                       | **CloudWatch RUM**                                   |
+| **Dashboards & Visualization**           | **Azure Monitor Dashboards** + **Grafana**           | **AWS Managed Grafana** + **CloudWatch Dashboards**  |
+| **Alerting**                             | **Azure Monitor Alerts**                             | **CloudWatch Alarms**                                |
+| **Security Monitoring**                  | **Azure Sentinel**                                   | **Amazon GuardDuty** + **CloudTrail**                |
+| **Network Monitoring**                   | **Azure Network Watcher**                            | **VPC Flow Logs** + **CloudWatch Network Monitoring** |
+| **Pricing**                              | Pay-as-you-go or subscription-based                  | Pay-as-you-go                                        |
+| **Integration with Other Tools**         | **Integrates with various Azure services**           | **Integrates with various AWS services**             |
+
+
+ ## Limitations
 - Limited APM (Application Performance Monitoring - metrics based) Features
 - No Built-In Log Management
 - Manual Instrumentation for Tracing
 - Scalability Challenges with High Cardinality Metric
 - Lack of Advanced AI and Anomaly Detection
 
-
+ ## Parameters for Observability tool selection
+- Full-stack observability (metrics, logs, and traces)
+- Ease of use and setup (simple deployment)
+- Scalability (ability to scale with your infrastructure)
+- Real-time monitoring, alerting, and anomaly detection
+- Unified data correlation (metrics, logs, and traces together)
+- Customizability and extensibility (support for integrations)
+- Cost efficiency (consider pricing models and scaling)
+- Security and compliance features
+- Support for distributed systems and microservices (e.g., Kubernetes)
+- Strong vendor support, community, and documentation
+- Integration with DevOps and CI/CD pipelines
+- Historical data retention and trend analysis
+- Avoidance of vendor lock-in (data portability)
 
 
 
