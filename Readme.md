@@ -29,9 +29,12 @@ displays the results, and can trigger alerts.
 
 **Prometheus server**:   
 
-   **Retrieval**: This module handles the scraping of metrics from endpoints, which are discovered either through static configurations or dynamic service discovery methods (Pull based mechanism).  
+   **Retrieval**: This module handles the scraping of metrics from endpoints, which are discovered either through static configurations or dynamic service discovery methods (Pull based mechanism). 
+   
    **TSDB**:  The data scraped from targets is stored in the TSDB, which is designed to handle high volumes of time-series data efficiently.TSDB stores data as time series which is a sequence of data points over time. Each time                        series is identified by a metric name and a set of key-value pairs (called labels), along with timestamps.  
+   
    **HTTP server**: This provides an API for querying data using PromQL, retrieving metadata, and interacting with other components of the Prometheus ecosystem including Grafana and Alertmanager.  
+   
    **Node (HDD/SSD) - Storage**: Prefers SSD for fast Read/Write Speed, high IOPS (Input/Output per Second) and low Latency.  
     
 **Node exporter**:   
