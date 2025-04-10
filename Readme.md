@@ -54,9 +54,10 @@ For example, in K8S, Prometheus can automatically discover services, pods, and n
 Dynamic service discovery mechanisms is configured within the prometheus.yml file.  
 
 **Pushgateway**    
-The Pushgateway is used to expose metrics from short-lived jobs or applications that cannot be scraped directly by Prometheus. The short-lived jobs themselves push the metrics to the Pushgateway and will hold for a certain period. From the Pushgateway server, Prometheus will pull the metrics.  
+The Pushgateway is used to expose metrics from short-lived jobs or applications that cannot be scraped directly by Prometheus due to the scrape interval settings. The short-lived jobs themselves push the metrics to the Pushgateway and will hold for a certain period. From the Pushgateway server, Prometheus will pull the metrics.  
 It is particularly useful for batch jobs or tasks or services that have a limited lifespan and would otherwise not have their metrics collected. For example, AWS Lambda service.     
 ![Alt text](/images-icons/pushgateway-2.jpeg)  
+For monitoring these short-lived jobs, targets must push their metrics to the Pushgateway, which exposes them via an HTTP endpoint for Prometheus to scrape. The Prometheus.yml file must be configured to allow the Pushgateway to scrape the metrics.  
 
 **Exporters**    
 
