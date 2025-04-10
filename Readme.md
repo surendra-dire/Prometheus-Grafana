@@ -93,7 +93,7 @@ scrape_configs:
 
 **API Clients**  
 
-
+Users are allowed to interact programmatically with Prometheus through its HTTP API to fetch data, query metrics, and integrate Prometheus with other applications like Grafana, Alertmanager, service meshes, and API gateways.
 
 **Premetheous targets**
 
