@@ -9,7 +9,7 @@ from configured targets at given intervals, evaluates rule expressions,
 displays the results, and can trigger alerts.
 
 
-## Main Features
+## 💡Main Features
 
 | **Feature**                      | **Description**                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------------|
@@ -23,7 +23,7 @@ displays the results, and can trigger alerts.
 | **Federation**                    | Supports both hierarchical and horizontal federation for scalability.          |
 
 
-## Architecture overview
+## 💡Architecture overview
 
 ![Architecture overview](/images-icons/prometheous-architecture.jpg)
 
@@ -98,49 +98,7 @@ Grafana is a powerful dashboard and visualization tool that integrates with Prom
 **API Clients**  
 Users are allowed to interact programmatically with Prometheus through its HTTP API to fetch data, query metrics, and integrate Prometheus with other applications like Grafana, Alertmanager, service meshes, API gateways, etc.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Installation
+## 💡Installation
 
 There are various ways of installing Prometheus : Precompiled binaries, Docker images, helm charts (for k8s) etc.
 
