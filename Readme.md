@@ -71,7 +71,6 @@ scrape_configs:
 </pre>
 
 **Exporters**    
-
 Exporters are small applications that collect metrics from various third-party systems and expose them in a format Prometheus can scrape. They are essential for monitoring systems that do not natively support Prometheus (like Kubernetes, Etcd, Istio, NGINX, RabbitMQ, Grafana, PostgreSQL, etc.).
 Common exporters include the Node Exporter (for os and hardware metrics - running on every node which exposes hardware and OS metrics over the HTTP protocol (End point -- > typically at http://<node-ip>:9100/metrics), the MySQL Exporter (for database metrics), and various other application-specific exporters.
 
