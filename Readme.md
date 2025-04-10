@@ -29,13 +29,10 @@ displays the results, and can trigger alerts.
 
 **Prometheus server**:   
 
-   **Retrieval**: Pull based mechanism, actively pulls (scrapes) data from target endpoints over HTTP.   
-   
-   **TSDB**:  TSDB stores data as time series. A sequence of data points over time. Each time series is identified by a metric name and a set of key-value pairs (called labels), along with timestamps for each data point.  
-   
-   **HTTP server**: Enables query (metrices exposed by node exporter over http) and visualize metrics over http, integration with other tools, like Grafana and Alertmanager.  
-    
-   **Node (HDD/SSD)**: Prefers SSD for fast Read/Write Speed, high IOPS (Input/Output per Second) and low Latency.  
+   **Retrieval**: This module handles the scraping of metrics from endpoints, which are discovered either through static configurations or dynamic service discovery methods (Pull based mechanism).  
+   **TSDB**:  The data scraped from targets is stored in the TSDB, which is designed to handle high volumes of time-series data efficiently.TSDB stores data as time series which is a sequence of data points over time. Each time                        series is identified by a metric name and a set of key-value pairs (called labels), along with timestamps.  
+   **HTTP server**: This provides an API for querying data using PromQL, retrieving metadata, and interacting with other components of the Prometheus ecosystem including Grafana and Alertmanager.  
+   **Node (HDD/SSD) - Storage**: Prefers SSD for fast Read/Write Speed, high IOPS (Input/Output per Second) and low Latency.  
     
 **Node exporter**:   
 Node Exporter is a lightweight agent running on every node which exposes hardware and OS metrics over the HTTP protocol (End point -- > typically at http://<node-ip>:9100/metrics) in a format that Prometheus can scrape.  
