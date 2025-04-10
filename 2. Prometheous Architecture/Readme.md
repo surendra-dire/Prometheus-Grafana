@@ -11,7 +11,7 @@ displays the results, and can trigger alerts.
 
 ## 💡Main Features
 
-| **Feature**                      | **Description**                                                                 |
+| **Feature**                       | **Description**                                                                  |
 |-----------------------------------|---------------------------------------------------------------------------------|
 | **Multi-dimensional data model**  | Time-series data identified by metric name and key-value labels.                |
 | **PromQL**                        | A powerful query language for flexible data analysis.                           |
@@ -20,7 +20,7 @@ displays the results, and can trigger alerts.
 | **Push support**                  | Push time-series data via an intermediary gateway for batch jobs.               |
 | **Service discovery**             | Automatic target discovery or static configuration.                             |
 | **Graphing & dashboarding**       | Integrates with tools like Grafana for visualization.                           |
-| **Federation**                    | Supports both hierarchical and horizontal federation for scalability.          |
+| **Federation**                    | Supports both hierarchical and horizontal federation for scalability.           |
 
 
 ## 💡Architecture overview
@@ -178,9 +178,12 @@ kubectl port-forward svc/prometheus-server -n monitoring 9090:80
 
 **Plugins.yaml**:  
 
-## Configuration file
+**alert.rules **
+**alertmanager.yml**
 
+**prometheus.rules (Recording Rules File)**
 
+** prometheus.d**
 
 
 
