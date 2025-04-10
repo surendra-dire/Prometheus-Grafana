@@ -48,24 +48,23 @@ Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, 
 * Silencing: Temporarily mutes specific alerts.  
 * Sends notifications to various integrations based on defined rout.
 
-**Service Discovery**
-* Service discovery automatically identifies and manages the list of scrape targets (i.e., services or applications) that Prometheus monitor. This is crucial in the dynamic environments like AWS Lambda, Kubernetes where services are constantly being created and destroyed.  
-For example:  
-        AWS Lambda : Prometheus can be configured to automatically discover AWS Lambda functions, which scale based on demand.  
-        K8S : Prometheus can automatically discover services, pods, and nodes using Kubernetes API, ensuring it monitors the most up-to-date list of targets.  
-* Dynamic service discovery mechanisms is configured within the prometheus.yml file.  
+**Service Discovery**  
+Service discovery is used to identify and manage the list of scrape targets which are constantly being created and destroyed. This is crucial in the dynamic environments where services are constantly being created and destroyed.
+For example, in K8S, Prometheus can automatically discover services, pods, and nodes using Kubernetes API, ensuring it monitors the most up-to-date list of targets.  
+Dynamic service discovery mechanisms is configured within the prometheus.yml file.  
 
-**Pushgateway**  
+**Pushgateway**    
+The Pushgateway is used to expose metrics from short-lived jobs or applications that cannot be scraped directly by Prometheus. These jobs push their metrics to the Pushgateway, which then makes them available for Prometheus to scrape(pull).  
+It is particularly useful for batch jobs or tasks that have a limited lifespan and would otherwise not have their metrics collected. For example, AWS Lambda.  
 
-
-**Exporters**
-
-
-**Alert Manager**
+**Exporters**  
 
 
+**Alert Manager**  
 
-**API Clients**
+
+
+**API Clients**  
 
 
 
