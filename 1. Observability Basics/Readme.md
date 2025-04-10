@@ -1,239 +1,24 @@
 
-<h1 align="center" style="border-bottom: none">
-    <a href="https://prometheus.io" target="_blank"><img alt="Prometheus" src="/images-icons/prometheus-logo.svg"></a><br>Prometheus
-</h1>
+# 💡Observability
+Observability is the ability to understand the internal state of a system by analyzing the data it produces, including logs, metrics, and traces. It tells " **Why** it is happening".  
 
+**logs**: Involves the collection of log data from various components of a system. Logging explains why it is happening.  
+**metrics**: Involves tracking system metrics like CPU usage, memory usage, and network performance and send alerts based on predefined thresholds and conditions. Main focus is "What is happening".  
+**Traces**: Involves tracking the flow of a request or transaction as it moves through different services and components within a system. Tracing shows "how it is happening".  
 
-Prometheus, a CNCF open source project, is a systems and service monitoring system. It collects metrics
-from configured targets at given intervals, evaluates rule expressions,
-displays the results, and can trigger alerts.
+**Goal**: 
 
+# 💡Monitoring
+Monitoring focuses on tracking system's health and performance through metrics (like CPU usage, memory usage, and network performance) and send alerts when something goes wrong. It tells **what** is happening. It is a part of observability.
 
-## Main Features
-
-| **Feature**                      | **Description**                                                                 |
-|-----------------------------------|---------------------------------------------------------------------------------|
-| **Multi-dimensional data model**  | Time-series data identified by metric name and key-value labels.                |
-| **PromQL**                        | A powerful query language for flexible data analysis.                           |
-| **Autonomous servers**            | Single server nodes with no distributed storage dependency.                     |
-| **HTTP pull model**               | Time-series data is pulled from monitored targets via HTTP.                     |
-| **Push support**                  | Push time-series data via an intermediary gateway for batch jobs.               |
-| **Service discovery**             | Automatic target discovery or static configuration.                             |
-| **Graphing & dashboarding**       | Integrates with tools like Grafana for visualization.                           |
-| **Federation**                    | Supports both hierarchical and horizontal federation for scalability.          |
-
-
-## Architecture overview
-
-![Architecture overview](/images-icons/prometheous-architecture.jpg)
-
-**Prometheus server**:   
-
-   **Retrieval**: This module handles the scraping of metrics from endpoints, which are discovered either through static configurations or dynamic service discovery methods (Pull based mechanism). 
-   
-   **TSDB**:  The data scraped from targets is stored in the TSDB, which is designed to handle high volumes of time-series data efficiently.TSDB stores data as time series which is a sequence of data points over time. Each time                        series is identified by a metric name and a set of key-value pairs (called labels), along with timestamps.  
-   
-   **HTTP server**: This provides an API for querying data using PromQL, retrieving metadata, and interacting with other components of the Prometheus ecosystem including Grafana and Alertmanager.  
-   
-   **Node (HDD/SSD) - Storage**: Prefers SSD for fast Read/Write Speed, high IOPS (Input/Output per Second) and low Latency.  
-    
-**Node exporter**:   
-Node Exporter is a lightweight agent running on every node which exposes hardware and OS metrics over the HTTP protocol (End point -- > typically at http://<node-ip>:9100/metrics) in a format that Prometheus can scrape.  
-
-**Alert Manager**:   
-Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, and routes them to the appropriate notification channels such as PagerDuty, email, or Slack.
-
-* Grouping: Combines similar alerts into a single notification to reduce alert noise.
-* Inhibition: Hiding (or suppressing) some alerts if a more important related alert is already firing
-* Silencing: Temporarily mutes specific alerts.  
-* Sends notifications to various integrations based on defined rout.
-
-**Service Discovery**  
-
-Service discovery is used to identify and manage the list of scrape targets which are constantly being created and destroyed. This is crucial in the dynamic environments where services are constantly being created and destroyed.
-For example, in K8S, Prometheus can automatically discover services, pods, and nodes using Kubernetes API, ensuring it monitors the most up-to-date list of targets.  
-Dynamic service discovery mechanisms is configured within the prometheus.yml file.  
-
-<pre style="color: orange;">
-scrape_configs:
-  - job_name: 'kubernetes-pods'
-    kubernetes_sd_configs:
-      - api_server: 'https://kubernetes.default.svc'
-        role: pod
-        namespaces:
-          names:
-            - default
-            - kube-system
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_label_app]
-        target_label: app
-      - source_labels: [__meta_kubernetes_namespace]
-        target_label: namespace
-</pre>
-
-**Exporters**    
-Exporters are small applications that collect metrics from various third-party systems and expose them in a format Prometheus can scrape. They are essential for monitoring systems that do not natively support Prometheus (like Kubernetes, Etcd, Istio, NGINX, RabbitMQ, Grafana, PostgreSQL, etc.).
-Common exporters include the Node Exporter (for os and hardware metrics - running on every node which exposes hardware and OS metrics over the HTTP protocol (End point -- > typically at http://<node-ip>:9100/metrics), the MySQL Exporter (for database metrics), and various other application-specific exporters.
-
-**Pushgateway**    
-The Pushgateway is used to expose metrics from short-lived jobs or services (such as batch jobs, cron jobs, Lambda functions, etc.) that cannot be scraped directly by Prometheus because they terminate quickly and may not be available during Prometheus's scrape intervals.  
-These jobs push their metrics to the Pushgateway, where the data is temporarily stored. Prometheus then pulls the metrics from the Pushgateway server.    
-![Alt text](/images-icons/pushgateway-2.jpeg)  
-For monitoring short-lived jobs, these jobs/targets must push their metrics to the Pushgateway (via Prometheus client library), which exposes them via an HTTP endpoint for Prometheus to scrape. The Prometheus.yml file must be configured to allow the Pushgateway to scrape the metrics.  
-
-<pre style="color: orange;">
-scrape_configs:
-  - job_name: 'pushgateway'
-    honor_labels: true
-    static_configs:
-      - targets: ['localhost:9091']
-</pre>
-
-**Prometheus Web UI**  
-The Prometheus Web UI allows users to explore the collected metrics data, run ad-hoc PromQL queries, and visualize the results directly within Prometheus
-
-**Grafana**  
-Grafana is a powerful dashboard and visualization tool that integrates with Prometheus to provide rich, customizable visualizations of the metrics data.
-
-**API Clients**  
-Users are allowed to interact programmatically with Prometheus through its HTTP API to fetch data, query metrics, and integrate Prometheus with other applications like Grafana, Alertmanager, service meshes, API gateways, etc.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Installation
-
-There are various ways of installing Prometheus : Precompiled binaries, Docker images, helm charts (for k8s) etc.
-
-### Precompiled binaries
-Download the Long-Term Support (LTS) binary, extract it, move the files to the /bin directory, and set up Prometheus to run as a service by creating the Prometheus user and updating the systemd service file. Precompiled binaries for released versions are available in the [*download* section](https://prometheus.io/download/) on [prometheus.io](https://prometheus.io).
- 
-```
-# Extract
-tar xvfz prometheus-*.tar.gz
-sudo mkdir /etc/prometheus /var/lib/prometheus
-cd prometheus*
-
-# Move file into directories
-sudo mv prometheus promtool /usr/local/bin/
-sudo mv prometheus.yml /etc/prometheus/prometheus.yml
-sudo mv consoles/ console_libraries/ /etc/prometheus/
-
-# Configure the prometheous to run as service. Create user.
-sudo useradd -rs /bin/false prometheus
-sudo chown -R prometheus: /etc/prometheus /var/lib/prometheus
-
-# Create prometheus service file
-sudo vi /etc/systemd/system/prometheus.service 
-
-[Unit]
-Description=Prometheus
-Wants=network-online.target
-After=network-online.target
-
-[Service]
-User=prometheus
-Group=prometheus
-Type=simple
-Restart=on-failure
-RestartSec=5s
-ExecStart=/usr/local/bin/prometheus \
-    --config.file /etc/prometheus/prometheus.yml \
-    --storage.tsdb.path /var/lib/prometheus/ \
-    --web.console.templates=/etc/prometheus/consoles \
-    --web.console.libraries=/etc/prometheus/console_libraries \
-    --web.listen-address=0.0.0.0:9090 \
-    --web.enable-lifecycle \
-    --log.level=info
-
-[Install]
-WantedBy=multi-user.target
-
-# Reload Daemon service and enable prometheus to start post reboot
-sudo systemctl daemon-reload
-sudo systemctl enable prometheus
-sudo systemctl status prometheus
-sudo systemctl start prometheus
-
-# Ensure port 9090 is open in firewall
-```
-### Docker images
-docker run --name prometheus -d -p 9090:9090 prom/prometheus  
-### Helm charts  
-Helm is a package manager for Kubernetes applications, and Helm charts are the packages containing the manifest files. Helm simplifies the deployment and management of applications within a Kubernetes cluster.  To install Prometheus, the Kubernetes (K8s) cluster should be up and running, and Helm should be installed.  
-#Install Helm  
-curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash  
-helm version  
-
-#Add the Prometheus Helm Chart Repository  
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts  
-helm repo update  
-
-#Install Promethous  
-kubectl create namespace monitoring   
-helm install prometheus prometheus-community/prometheus --namespace monitoring    
-
-#Access Prometheus Web UI via port forwarding
-kubectl port-forward svc/prometheus-server -n monitoring 9090:80
-
-## Configuration files
-**prometheous.yaml**:  
-
-**Plugins.yaml**:  
-
-## Configuration file
-
-## Observability Basics
-
-Monitoring focuses on tracking system health and performance through metrics and alerts, while Observability enables understanding of system behavior  by analyzing the data it produces, including logs, metrics, and traces to diagnose and investigate issues. Monitoring tells us what is happening, Logging explains why it is happening and Tracing shows how it is happening.
-Monitoring is the *`when and what`* of a system error, and observability is the *`why and how`*
+# 💡Monitoring vs Observability 
 
 | Category       | Monitoring                                   | Observability                                         |
 |----------------|----------------------------------------------|------------------------------------------------------|
-| **Focus**          | Checking if everything is working as expected| Understanding why things are happening in the system  |
+| **Focus**          | Checking if everything is working as expected else alerting| Understanding why things are happening in the system, Identify the root cause |
 | **Data**           | Collects metrics like CPU usage, memory usage, and error rates | Collects logs, metrics, and traces to provide a full picture |
-| **Alerts**         | Sends notifications when something goes wrong| Correlates events and anomalies to identify root causes |
 | **Example**        | If a server's CPU usage goes above 90%, monitoring will alert us | If a website is slow, observability helps us trace the user's request through different services to find the bottleneck |
-| **Insight**        | Identifies potential issues before they become critical  | Helps diagnose issues and understand system behavior |
+| **Benefit**        | Identifies potential issues before they become critical  | Helps diagnose issues and understand system behavior |
 | **Tools**          | Prometheus, Grafana, Nagios, Zabbix, PRTG  | ELK Stack (Elasticsearch, Logstash, Kibana), EFK Stack (Elasticsearch, FluentBit, Kibana) Splunk, Jaeger, Zipkin, New Relic, Dynatrace, Datadog |
 
 
@@ -272,7 +57,7 @@ The table below compares several observability tools widely used in monitoring a
 | **Extensibility**                        | Limited extensibility for integration                | Highly extensible (can integrate with various tools) | Highly extensible (can integrate with various tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (via plugins, exporters, etc.)     |
 
 
- ## Observability Tools in Azure vs AWS
+ ## Observability Tools in Azure vs AWS cloud
 
 | **Feature**                              | **Azure**                                            | **AWS**                                              |
 |------------------------------------------|------------------------------------------------------|------------------------------------------------------|
