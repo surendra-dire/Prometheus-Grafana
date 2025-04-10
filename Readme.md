@@ -89,24 +89,16 @@ scrape_configs:
       - targets: ['localhost:9091']
 </pre>
 
+**Prometheus Web UI**  
+The Prometheus Web UI allows users to explore the collected metrics data, run ad-hoc PromQL queries, and visualize the results directly within Prometheus
 
-
-**Alert Manager**  
-
-
+**Grafana**  
+Grafana is a powerful dashboard and visualization tool that integrates with Prometheus to provide rich, customizable visualizations of the metrics data.
 
 **API Clients**  
-
 Users are allowed to interact programmatically with Prometheus through its HTTP API to fetch data, query metrics, and integrate Prometheus with other applications like Grafana, Alertmanager, service meshes, API gateways, etc.
 
-**Premetheous targets**
 
-
-
-**Service Discovery**
-
-
-**Challanges**
 
 
 
