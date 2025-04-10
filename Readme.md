@@ -53,11 +53,36 @@ Service discovery is used to identify and manage the list of scrape targets whic
 For example, in K8S, Prometheus can automatically discover services, pods, and nodes using Kubernetes API, ensuring it monitors the most up-to-date list of targets.  
 Dynamic service discovery mechanisms is configured within the prometheus.yml file.  
 
+<pre style="color: orange;">
+scrape_configs:
+  - job_name: 'kubernetes-pods'
+    kubernetes_sd_configs:
+      - api_server: 'https://kubernetes.default.svc'
+        role: pod
+        namespaces:
+          names:
+            - default
+            - kube-system
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_label_app]
+        target_label: app
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: namespace
+</pre>
+
 **Pushgateway**    
 The Pushgateway is used to expose metrics from short-lived jobs or applications that cannot be scraped directly by Prometheus due to the scrape interval settings. The short-lived jobs themselves push the metrics to the Pushgateway and will hold for a certain period. From the Pushgateway server, Prometheus will pull the metrics.  
 It is particularly useful for batch jobs or tasks or services that have a limited lifespan and would otherwise not have their metrics collected. For example, AWS Lambda service.     
 ![Alt text](/images-icons/pushgateway-2.jpeg)  
 For monitoring these short-lived jobs, targets must push their metrics to the Pushgateway, which exposes them via an HTTP endpoint for Prometheus to scrape. The Prometheus.yml file must be configured to allow the Pushgateway to scrape the metrics.  
+
+<pre style="color: orange;">
+scrape_configs:
+  - job_name: 'pushgateway'
+    honor_labels: true
+    static_configs:
+      - targets: ['localhost:9091']
+</pre>
 
 **Exporters**    
 
