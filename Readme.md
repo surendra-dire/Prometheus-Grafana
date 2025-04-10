@@ -55,7 +55,7 @@ Dynamic service discovery mechanisms is configured within the prometheus.yml fil
 
 **Pushgateway**    
 The Pushgateway is used to expose metrics from short-lived jobs or applications that cannot be scraped directly by Prometheus. The jobs short-lived jobs themselves push the metrics to the Pushgateway and will hold for a certain period. From the Pushgateway server, Prometheus will pull the metrics.
-It is particularly useful for batch jobs or tasks that have a limited lifespan and would otherwise not have their metrics collected. For example, AWS Lambda.    
+It is particularly useful for batch jobs or tasks that have a limited lifespan and would otherwise not have their metrics collected. For example, AWS Lambda service.     
 ![Alt text](/images-icons/pushgateway-2.jpeg)  
 
 **Exporters**    
