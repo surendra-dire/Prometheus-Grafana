@@ -49,12 +49,13 @@ Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, 
 * Sends notifications to various integrations based on defined rout.
 
 **Service Discovery**
-Service discovery automatically identifies and manages the list of scrape targets (i.e., services or applications) that Prometheus monitor. This is crucial in the dynamic environments like AWS Lambda, Kubernetes where services are constantly being created and destroyed.  
-Examples:  
-AWS Lambda : Prometheus can be configured to automatically discover AWS Lambda functions, which scale based on demand.  
-K8S : Prometheus can automatically discover services, pods, and nodes using Kubernetes API, ensuring it monitors the most up-to-date list of targets.  
+* Service discovery automatically identifies and manages the list of scrape targets (i.e., services or applications) that Prometheus monitor. This is crucial in the dynamic environments like AWS Lambda, Kubernetes where services are constantly being created and destroyed.  
+For example:  
+        AWS Lambda : Prometheus can be configured to automatically discover AWS Lambda functions, which scale based on demand.  
+        K8S : Prometheus can automatically discover services, pods, and nodes using Kubernetes API, ensuring it monitors the most up-to-date list of targets.  
+* Dynamic service discovery mechanisms is configured within the prometheus.yml file.  
 
-**Pushgateway**
+**Pushgateway**  
 
 
 **Exporters**
