@@ -41,10 +41,10 @@ displays the results, and can trigger alerts.
 Node Exporter is a lightweight agent running on every node which exposes hardware and OS metrics over the HTTP protocol (End point -- > typically at http://<node-ip>:9100/metrics) in a format that Prometheus can scrape.  
 
 **Alert Manager**:   
-Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, and routes them to the appropriate notification channels.
+Alert Manager takes alerts from Prometheus, groups them, eliminates duplicates, and routes them to the appropriate notification channels such as PagerDuty, email, or Slack.
 
-* Grouping: Combines similar alerts to reduce notification noise.
-* Inhibition: Suppresses alerts if others are already firing. 
+* Grouping: Combines similar alerts into a single notification to reduce alert noise.
+* Inhibition: Hiding (or suppressing) some alerts if a more important related alert is already firing
 * Silencing: Temporarily mutes specific alerts.  
 * Sends notifications to various integrations based on defined rout.
 
@@ -71,7 +71,8 @@ scrape_configs:
 </pre>
 
 **Pushgateway**    
-The Pushgateway is used to expose metrics from short-lived jobs or services (such as batch jobs, cron jobs, Lambda functions, etc.) that cannot be scraped directly by Prometheus because they terminate quickly and may not be available during Prometheus's scrape intervals. These jobs push their metrics to the Pushgateway, where the data is temporarily stored. Prometheus then pulls the metrics from the Pushgateway server.    
+The Pushgateway is used to expose metrics from short-lived jobs or services (such as batch jobs, cron jobs, Lambda functions, etc.) that cannot be scraped directly by Prometheus because they terminate quickly and may not be available during Prometheus's scrape intervals.  
+These jobs push their metrics to the Pushgateway, where the data is temporarily stored. Prometheus then pulls the metrics from the Pushgateway server.    
 ![Alt text](/images-icons/pushgateway-2.jpeg)  
 For monitoring these short-lived jobs, these jobs/targets must push their metrics to the Pushgateway (via Prometheus client library), which exposes them via an HTTP endpoint for Prometheus to scrape. The Prometheus.yml file must be configured to allow the Pushgateway to scrape the metrics.  
 
