@@ -71,10 +71,9 @@ scrape_configs:
 </pre>
 
 **Pushgateway**    
-The Pushgateway is used to expose metrics from short-lived jobs or applications that cannot be scraped directly by Prometheus due to the scrape interval settings. The short-lived jobs themselves push the metrics to the Pushgateway and will hold for a certain period. From the Pushgateway server, Prometheus will pull the metrics.  
-It is particularly useful for batch jobs or tasks or services that have a limited lifespan and would otherwise not have their metrics collected. For example, AWS Lambda service.     
+The Pushgateway is used to expose metrics from short-lived jobs or services (such as batch jobs, cron jobs, Lambda functions, etc.) that cannot be scraped directly by Prometheus because they terminate quickly and may not be available during Prometheus's scrape intervals. These jobs push their metrics to the Pushgateway, where the data is temporarily stored. Prometheus then pulls the metrics from the Pushgateway server.    
 ![Alt text](/images-icons/pushgateway-2.jpeg)  
-For monitoring these short-lived jobs, targets must push their metrics to the Pushgateway (via Prometheus client library), which exposes them via an HTTP endpoint for Prometheus to scrape. The Prometheus.yml file must be configured to allow the Pushgateway to scrape the metrics.  
+For monitoring these short-lived jobs, these jobs/targets must push their metrics to the Pushgateway (via Prometheus client library), which exposes them via an HTTP endpoint for Prometheus to scrape. The Prometheus.yml file must be configured to allow the Pushgateway to scrape the metrics.  
 
 <pre style="color: orange;">
 scrape_configs:
