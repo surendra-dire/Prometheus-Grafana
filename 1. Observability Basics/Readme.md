@@ -1,4 +1,4 @@
-# 💡Observability
+## 💡Observability
 Observability is the ability to understand the internal state of a system by analyzing the data it produces, including logs, metrics, and traces. It tells "**Why** it is happening".  
 
 **logs**: Involves the collection of log data from various components of a system. Logging explains why it is happening.  
@@ -7,10 +7,10 @@ Observability is the ability to understand the internal state of a system by ana
 
 
 
-# 💡Monitoring
+## 💡Monitoring
 Monitoring focuses on tracking system's health and performance through metrics (like CPU usage, memory usage, and network performance) and raise alerts when something goes wrong. It tells " **What** is happening". It is a part of observability.
 
-# 💡Monitoring vs Observability 
+## 💡Monitoring vs Observability 
 
 | Category       | Monitoring                                   | Observability                                         |
 |----------------|----------------------------------------------|------------------------------------------------------|
@@ -20,7 +20,7 @@ Monitoring focuses on tracking system's health and performance through metrics (
 | **Benefit**        | Identifies potential issues before they become critical  | Helps diagnose issues and understand system behavior |
 | **Tools**          | Prometheus, Grafana, Nagios, Zabbix, PRTG  | ELK Stack (Elasticsearch, Logstash, Kibana), EFK Stack (Elasticsearch, FluentBit, Kibana) Splunk, Jaeger, Zipkin, New Relic, Dynatrace, Datadog |
 
-# 💡Monitoring and Observability Scenarios
+## 💡Monitoring & Observability Scenarios
 
 ## Monitoring scenarios
 - **Infrastructure**: CPU usage, memory usage, disk I/O, network traffic.
@@ -57,7 +57,7 @@ The table below compares several observability tools widely used in monitoring a
 | **Extensibility**                        | Limited extensibility for integration                | Highly extensible (can integrate with various tools) | Highly extensible (can integrate with various tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (integrates with many third-party tools) | Highly extensible (via plugins, exporters, etc.)     |
 
 
- ## 💡Observability Tools in Azure & AWS cloud
+ ## 💡Monitoring & Observability Tools in Azure & AWS cloud
 
 | **Feature**                              | **Azure**                                            | **AWS**                                              |
 |------------------------------------------|------------------------------------------------------|------------------------------------------------------|
