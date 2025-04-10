@@ -1,4 +1,3 @@
-
 # 💡Observability
 Observability is the ability to understand the internal state of a system by analyzing the data it produces, including logs, metrics, and traces. It tells "**Why** it is happening".  
 
