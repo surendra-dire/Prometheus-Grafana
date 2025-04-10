@@ -70,6 +70,11 @@ scrape_configs:
         target_label: namespace
 </pre>
 
+**Exporters**    
+
+Exporters are small applications that collect metrics from various third-party systems and expose them in a format Prometheus can scrape. They are essential for monitoring systems that do not natively support Prometheus (like Kubernetes, Etcd, Istio, NGINX, RabbitMQ, Grafana, etc.).
+Common exporters include the Node Exporter (for hardware metrics), the MySQL Exporter (for database metrics), and various other application-specific exporters.
+
 **Pushgateway**    
 The Pushgateway is used to expose metrics from short-lived jobs or services (such as batch jobs, cron jobs, Lambda functions, etc.) that cannot be scraped directly by Prometheus because they terminate quickly and may not be available during Prometheus's scrape intervals.  
 These jobs push their metrics to the Pushgateway, where the data is temporarily stored. Prometheus then pulls the metrics from the Pushgateway server.    
@@ -84,7 +89,6 @@ scrape_configs:
       - targets: ['localhost:9091']
 </pre>
 
-**Exporters**    
 
 
 **Alert Manager**  
