@@ -171,7 +171,7 @@ helm repo update
 kubectl create namespace monitoring   
 helm install prometheus prometheus-community/prometheus --namespace monitoring    
 
-#Access Prometheus Web UI via port forwarding
+#Access Prometheus Web UI via port forwarding   
 kubectl port-forward svc/prometheus-server -n monitoring 9090:80
 
 ## Configuration files
