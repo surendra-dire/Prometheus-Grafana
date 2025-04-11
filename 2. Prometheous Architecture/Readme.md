@@ -88,7 +88,7 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9091']
 </pre>
-Note: Limitations ?
+Note: Limitations ?   
 **Prometheus Web UI**  
 The Prometheus Web UI allows users to explore the collected metrics data, run ad-hoc PromQL queries, and visualize the results directly within Prometheus
 
