@@ -106,7 +106,8 @@ There are various ways of installing Prometheus : Precompiled binaries, Docker i
 Download the Long-Term Support (LTS) binary, extract it, move the files to the /bin directory, and set up Prometheus to run as a service by creating the Prometheus user and updating the systemd service file. Precompiled binaries for released versions are available in the [*download* section](https://prometheus.io/download/) on [prometheus.io](https://prometheus.io).
  
 ```
-# Extract
+# Extract (Go with current LTS version)
+wget https://github.com/prometheus/prometheus/releases/download/v2.53.4/prometheus-2.53.4.linux-amd64.tar.gz
 tar xvfz prometheus-*.tar.gz
 sudo mkdir /etc/prometheus /var/lib/prometheus
 cd prometheus*
