@@ -88,9 +88,9 @@ This is the primary configuration file specifying how and where to collect metri
 # Global settings
 # ===============================
 global:
-  scrape_interval: 15s       # How often to scrape targets (default is 1m)
-  evaluation_interval: 15s   # How often to evaluate alert rules
-  scrape_timeout: 10s        # Timeout for scraping a target
+  scrape_interval: 15s        # How often to scrape targets (default is 60s)
+  evaluation_interval: 15s   # How often to evaluate alert rules (default is 60s)
+  scrape_timeout: 10s        # Timeout for scraping a target (default is 10s)
 
 # ===============================
 # Alertmanager config (optional)
