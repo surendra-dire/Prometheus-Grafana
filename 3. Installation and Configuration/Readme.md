@@ -4,7 +4,7 @@
 </h1>
 
 
-## 💡Installation
+## 💡Installation - Prometheus
 
 There are various ways of installing Prometheus : Precompiled binaries, Docker images, helm charts (for k8s) etc.
 
@@ -12,6 +12,8 @@ There are various ways of installing Prometheus : Precompiled binaries, Docker i
 Download the Long-Term Support (LTS) binary, extract it, move the files to the /bin directory, and set up Prometheus to run as a service by creating the Prometheus user and updating the systemd service file. Precompiled binaries for released versions are available in the [*download* section](https://prometheus.io/download/) on [prometheus.io](https://prometheus.io).
  
 ```
+# update package list
+sudo apt update
 # Extract (Go with current LTS version)
 wget https://github.com/prometheus/prometheus/releases/download/v2.53.4/prometheus-2.53.4.linux-amd64.tar.gz
 tar xvfz prometheus-*.tar.gz
@@ -79,6 +81,86 @@ helm install prometheus prometheus-community/prometheus --namespace monitoring
 
 #Access Prometheus Web UI via port forwarding   
 kubectl port-forward svc/prometheus-server -n monitoring 9090:80
+
+## 💡Installation - Alertmanager
+```
+# update package list
+sudo apt update
+
+# Extract (Go with current LTS version)
+wget https://github.com/prometheus/alertmanager/releases/download/v0.23.0/alertmanager-0.28.1.linux-amd64.tar.gz
+tar -xvzf alertmanager-*.tar.gz
+
+# Move file into bin directories
+cd alertmanager*
+sudo mv alertmanager-0.28.1-linux-amd64/alertmanager /usr/local/bin/
+sudo mv alertmanager-0.28.1-linux-amd64/amtool /usr/local/bin/
+
+# Create Alertmanager configuration directory and configuration file
+sudo mkdir -p /etc/alertmanager
+sudo nano /etc/alertmanager/alertmanager.yml
+
+
+# Add the configuration details - for example sending alerts to email
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 3h
+  receiver: 'email'
+
+receivers:
+- name: 'email'
+  email_configs:
+  - to: 'your-email@example.com'
+    from: 'alertmanager@example.com'
+    smtp_smarthost: 'smtp.example.com:587'
+    smtp_from: 'alertmanager@example.com'
+    smtp_auth_username: 'alertmanager@example.com'
+    smtp_auth_password: 'your-email-password'
+    send_resolved: true
+
+# Start alert manager
+alertmanager --config.file=/etc/alertmanager/alertmanager.yml
+
+# Configure Alertmanager to Start Automatically
+# Create a service file &  Add the following configuration
+
+[Unit]
+Description=Alertmanager
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/alertmanager --config.file=/etc/alertmanager/alertmanager.yml
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+
+# Reload Daemon service and enable prometheus to start post reboot
+
+sudo systemctl daemon-reload
+sudo systemctl enable alertmanager
+sudo systemctl start alertmanager
+sudo systemctl status prometheus
+
+# Acess alert manager at port 9093. Ensure port 9093 is open in firewall.
+http://<your-server-ip>:9093
+
+# Connect Prometheus to Alertmanager
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - 'localhost:9093'
+
+```
+
+
 
 ## Configuration files
 **prometheous.yml**:  
