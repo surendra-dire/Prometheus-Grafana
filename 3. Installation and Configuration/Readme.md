@@ -96,17 +96,18 @@ sudo apt update
 
 # Extract (Go with current LTS version)
 wget https://github.com/prometheus/alertmanager/releases/download/v0.28.1/alertmanager-0.28.1.linux-amd64.tar.gz
-tar -xvzf alertmanager-*.tar.gz
+tar -xvzf alertmanager-0.28.1.linux-amd64
 
-# Move file into bin directories
-cd alertmanager*
-sudo mv alertmanager-0.28.1-linux-amd64/alertmanager /usr/local/bin/
-sudo mv alertmanager-0.28.1-linux-amd64/amtool /usr/local/bin/
+# Move alermanager binary & amtool command-line utility in bin folder
+sudo mv alertmanager-0.28.1.linux-amd64/alertmanager alertmanager-0.28.1.linux-amd64/amtool  /usr/local/bin/
+
+# Create Alertmanager folder to store its internal state (Silences, Notification log & Other runtime data)
+sudo mkdir -p /var/lib/alertmanager
 
 # Create Alertmanager configuration directory and configuration file
+
 sudo mkdir -p /etc/alertmanager
 sudo nano /etc/alertmanager/alertmanager.yml
-
 
 # Add the configuration details - for example sending alerts to email
 global:
@@ -131,19 +132,32 @@ receivers:
     send_resolved: true
 
 # Start alert manager
+
 alertmanager --config.file=/etc/alertmanager/alertmanager.yml
 
-# Configure Alertmanager to Start Automatically
-# Create a service file &  Add the following configuration
+# Create alertmanager user
 
-[Unit]
+sudo useradd --no-create-home --system --shell /bin/false alertmanager
+
+sudo chown -R alertmanager:alertmanager /etc/alertmanager
+sudo chown alertmanager:alertmanager /usr/local/bin/alertmanager
+
+# Create service file alertmanager & add the following configuration
+
+sudo nano /etc/systemd/system/alertmanager.service
+
+[[Unit]
 Description=Alertmanager
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/alertmanager --config.file=/etc/alertmanager/alertmanager.yml
+User=alertmanager
+Group=alertmanager
+Type=simple
+ExecStart=/usr/local/bin/alertmanager \
+  --config.file=/etc/alertmanager/alertmanager.yml \
+  --storage.path=/var/lib/alertmanager
 Restart=always
-User=root
 
 [Install]
 WantedBy=multi-user.target
@@ -153,7 +167,7 @@ WantedBy=multi-user.target
 sudo systemctl daemon-reload
 sudo systemctl enable alertmanager
 sudo systemctl start alertmanager
-sudo systemctl status prometheus
+sudo systemctl status alertmanager
 
 # Acess alert manager at port 9093. Ensure port 9093 is open in firewall.
 http://<your-server-ip>:9093
