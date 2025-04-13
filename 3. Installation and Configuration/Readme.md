@@ -73,6 +73,7 @@ docker run --name prometheus -d -p 9090:9090 prom/prometheus
 ### Helm charts  
 Helm is a package manager for Kubernetes applications, and Helm charts are the packages containing the manifest files. Helm simplifies the deployment and management of applications within a Kubernetes cluster.  To install Prometheus, the Kubernetes (K8s) cluster should be up and running, and Helm should be installed.  
 
+```
 #Install Helm  
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash  
 helm version  
@@ -87,7 +88,7 @@ helm install prometheus prometheus-community/prometheus --namespace monitoring
 
 #Access Prometheus Web UI via port forwarding   
 kubectl port-forward svc/prometheus-server -n monitoring 9090:80
-
+```
 ## 💡Installation - Alertmanager [ubuntu]
 ```
 # update package list
