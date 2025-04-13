@@ -15,17 +15,20 @@ Download the Long-Term Support (LTS) binary, extract it, move the files to the /
 # update package list
 sudo apt update
 # Extract (Go with current LTS version)
+
 wget https://github.com/prometheus/prometheus/releases/download/v2.53.4/prometheus-2.53.4.linux-amd64.tar.gz
 tar xvfz prometheus-*.tar.gz
 sudo mkdir /etc/prometheus /var/lib/prometheus
 cd prometheus*
 
 # Move file into directories
+
 sudo mv prometheus promtool /usr/local/bin/
 sudo mv prometheus.yml /etc/prometheus/prometheus.yml
 sudo mv consoles/ console_libraries/ /etc/prometheus/
 
 # Configure the prometheous to run as service. Create user.
+
 sudo useradd -rs /bin/false prometheus
 sudo chown -R prometheus: /etc/prometheus /var/lib/prometheus
 
@@ -64,9 +67,12 @@ sudo systemctl start prometheus
 # Ensure port 9090 is open in firewall
 ```
 ### Docker images
+
 docker run --name prometheus -d -p 9090:9090 prom/prometheus  
+
 ### Helm charts  
 Helm is a package manager for Kubernetes applications, and Helm charts are the packages containing the manifest files. Helm simplifies the deployment and management of applications within a Kubernetes cluster.  To install Prometheus, the Kubernetes (K8s) cluster should be up and running, and Helm should be installed.  
+
 #Install Helm  
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash  
 helm version  
