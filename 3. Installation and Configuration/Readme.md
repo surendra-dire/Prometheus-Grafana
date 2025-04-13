@@ -4,7 +4,7 @@
 </h1>
 
 
-## 💡Installation - Prometheus
+## 💡Installation - Prometheus [ubuntu]
 
 There are various ways of installing Prometheus : Precompiled binaries, Docker images, helm charts (for k8s) etc.
 
@@ -82,13 +82,13 @@ helm install prometheus prometheus-community/prometheus --namespace monitoring
 #Access Prometheus Web UI via port forwarding   
 kubectl port-forward svc/prometheus-server -n monitoring 9090:80
 
-## 💡Installation - Alertmanager
+## 💡Installation - Alertmanager [ubuntu]
 ```
 # update package list
 sudo apt update
 
 # Extract (Go with current LTS version)
-wget https://github.com/prometheus/alertmanager/releases/download/v0.23.0/alertmanager-0.28.1.linux-amd64.tar.gz
+wget https://github.com/prometheus/alertmanager/releases/download/v0.28.1/alertmanager-0.28.1.linux-amd64.tar.gz
 tar -xvzf alertmanager-*.tar.gz
 
 # Move file into bin directories
@@ -157,10 +157,7 @@ alerting:
   - static_configs:
     - targets:
       - 'localhost:9093'
-
 ```
-
-
 
 ## Configuration files
 **prometheous.yml**:  
