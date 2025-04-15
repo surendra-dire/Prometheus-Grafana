@@ -110,26 +110,27 @@ sudo mkdir -p /etc/alertmanager
 sudo nano /etc/alertmanager/alertmanager.yml
 
 # Add the configuration details - for example sending alerts to email
+
 global:
   resolve_timeout: 5m
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'email@gmail.com'
+  smtp_auth_username: 'email@gmail.com'
+  smtp_auth_password: 'ipmc abc sedg ijkl'
 
 route:
   group_by: ['alertname']
   group_wait: 30s
   group_interval: 5m
   repeat_interval: 3h
-  receiver: 'email'
+  receiver: 'surendra'
 
 receivers:
-- name: 'email'
-  email_configs:
-  - to: 'your-email@example.com'
-    from: 'alertmanager@example.com'
-    smtp_smarthost: 'smtp.example.com:587'
-    smtp_from: 'alertmanager@example.com'
-    smtp_auth_username: 'alertmanager@example.com'
-    smtp_auth_password: 'your-email-password'
-    send_resolved: true
+  - name: 'surendra'
+    email_configs:
+      - to: 'email@gmail.com'
+        send_resolved: true
+
 
 # Start alert manager
 
