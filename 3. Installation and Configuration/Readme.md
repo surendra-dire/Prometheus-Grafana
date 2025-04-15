@@ -1,4 +1,3 @@
-
 <h1 align="center" style="border-bottom: none">
     <a href="https://prometheus.io" target="_blank"><img alt="Prometheus" src="/images-icons/prometheus-logo.svg"></a><br>Prometheus
 </h1>
@@ -112,24 +111,24 @@ sudo nano /etc/alertmanager/alertmanager.yml
 # Add the configuration details - for example sending alerts to email
 
 global:
-  resolve_timeout: 5m
-  smtp_smarthost: 'smtp.gmail.com:587'
-  smtp_from: 'email@gmail.com'
-  smtp_auth_username: 'email@gmail.com'
-  smtp_auth_password: 'ipmc abc sedg ijkl'
+  resolve_timeout: 5m                            # Alertmanager will wait for 5 minutes to confirm the situation is stable before sending a notification that the issue is resolved.
+  smtp_smarthost: 'smtp.gmail.com:587'           # Gmail SMTP server and port
+  smtp_from: 'email@gmail.com'                   # Email address from which the alerts will be sent
+  smtp_auth_username: 'email@gmail.com'          # username for authentication with the SMTP server
+  smtp_auth_password: 'ipmc abc sedg ijkl'       # password for the Gmail account (app password)
 
 route:
-  group_by: ['alertname']
-  group_wait: 30s
-  group_interval: 5m
-  repeat_interval: 3h
-  receiver: 'surendra'
+  group_by: ['alertname']                        # group alerts by their alertname label. Alerts with the same alertname will be grouped together in a notification.
+  group_wait: 30s                                # Alertmanager will wait for 30 seconds before sending the notification
+  group_interval: 5m                             # Minimum amount of time between two notifications for the same group of alerts
+  repeat_interval: 3h                            # If an alert is still firing after the first notification, it will be repeated every 3 hours
+  receiver: 'surendra'                           # receiver for the alerts
 
 receivers:
   - name: 'surendra'
     email_configs:
-      - to: 'email@gmail.com'
-        send_resolved: true
+      - to: 'email@gmail.com'                    # Email address where the alert notifications will be sent
+        send_resolved: true                      # Notification will be sent when an alert is resolved
 
 
 # Start alert manager
