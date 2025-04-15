@@ -108,7 +108,7 @@ sudo mkdir -p /var/lib/alertmanager
 sudo mkdir -p /etc/alertmanager
 sudo nano /etc/alertmanager/alertmanager.yml
 
-# Add the configuration details - for example sending alerts to email
+# Add the configuration details - for example sending alerts to email and slack.
 
 global:
   resolve_timeout: 5m                            # Alertmanager will wait for 5 minutes to confirm the situation is stable before sending a notification that the issue is resolved.
@@ -121,7 +121,7 @@ route:
   group_by: ['alertname']                        # group alerts by their alertname label. Alerts with the same alertname will be grouped together in a notification.
   group_wait: 30s                                # Alertmanager will wait for 30 seconds before sending the notification
   group_interval: 5m                             # Minimum amount of time between two notifications for the same group of alerts
-  repeat_interval: 3h                            # If an alert is still firing after the first notification, it will be repeated every 3 hours
+  repeat_interval: 3h                            # If an alert is still firing after the first notification, it will be repeated every 1 hour
   receiver: 'surendra'                           # receiver for the alerts
 
 receivers:
@@ -129,6 +129,10 @@ receivers:
     email_configs:
       - to: 'email@gmail.com'                    # Email address where the alert notifications will be sent
         send_resolved: true                      # Notification will be sent when an alert is resolved
+   slack_configs:
+      - channel: '#alertmanager'  # Name of your Slack channel
+        send_resolved: true
+        api_url: 'https://hooks.slack.com/services/T05J4A05EHM/B0SDSRN7LJ/8PxXwee8DdferFG'  # Slack Incoming Webhook URL
 
 
 # Start alert manager
