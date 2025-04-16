@@ -18,16 +18,15 @@ sudo apt update
 wget https://github.com/prometheus/prometheus/releases/download/v2.53.4/prometheus-2.53.4.linux-amd64.tar.gz
 tar xvfz prometheus-*.tar.gz
 sudo mkdir /etc/prometheus /var/lib/prometheus
-cd prometheus*
+cd prometheus-2.53.4.linux-amd64
 
 # Move file into directories
-
 sudo mv prometheus promtool /usr/local/bin/
 sudo mv prometheus.yml /etc/prometheus/prometheus.yml
 sudo mv consoles/ console_libraries/ /etc/prometheus/
-
+```
+```
 # Configure the prometheous to run as service. Create user.
-
 sudo useradd -rs /bin/false prometheus
 sudo chown -R prometheus: /etc/prometheus /var/lib/prometheus
 
@@ -66,7 +65,6 @@ sudo systemctl start prometheus
 # Ensure port 9090 is open in firewall
 ```
 ### Docker images
-
 docker run --name prometheus -d -p 9090:9090 prom/prometheus  
 
 ### Helm charts  
@@ -102,9 +100,9 @@ sudo mv alertmanager-0.28.1.linux-amd64/alertmanager alertmanager-0.28.1.linux-a
 
 # Create Alertmanager folder to store its internal state (Silences, Notification log & Other runtime data)
 sudo mkdir -p /var/lib/alertmanager
-
+```
+```
 # Create Alertmanager configuration directory and configuration file
-
 sudo mkdir -p /etc/alertmanager
 sudo nano /etc/alertmanager/alertmanager.yml
 
