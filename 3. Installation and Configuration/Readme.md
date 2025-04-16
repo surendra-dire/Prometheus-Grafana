@@ -182,14 +182,12 @@ sudo systemctl status alertmanager
 
 # Acess alert manager at port 9093. Ensure port 9093 is open in firewall.
 http://<your-server-ip>:9093
-
-
 ```
-
 ## Configuration files
+
 **prometheous.yml**:  
 This is the primary configuration file specifying how and where to collect metrics, including scrape intervals, targets, and job settings. It can also reference external files for alerting and recording rules, helping to keep the setup more modular and maintainable.
-<pre> 
+``` 
 # ===============================
 # Global settings
 # ===============================
@@ -244,87 +242,38 @@ scrape_configs:
       - source_labels: [__address__]
         target_label: job
         replacement: 'flask_app'
-  </pre>
-
-**Plugins.yaml**:  
-
-**alert.rules **
-**alertmanager.yml**
-
-**prometheus.rules (Recording Rules File)**
-
-** prometheus.d**
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Prometheus Configuration File Location
-Prometheus YML file is located at following `/etc/prometheus/prometheus.yml`
-Here is what a default configuration file will look like.
-
 ```
-# my global config
-global:
-  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
-  # scrape_timeout is set to the global default (10s).
-
-  # Attach these labels to any time series or alerts when communicating with
-  # external systems (federation, remote storage, Alertmanager).
-  external_labels:
-      monitor: 'codelab-monitor'
-
-# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
-rule_files:
-  # - "first.rules"
-  # - "second.rules"
-
-# A scrape configuration containing exactly one endpoint to scrape:
-# Here it's Prometheus itself.
-scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
-    static_configs:
-      - targets: ['localhost:9090']
+**alerts.rout.yml**:  
+It defines routing rules for how alerts are grouped and sent to different receivers (/etc/prometheus/alert.rules.yml)
 ```
+groups:
+  - name: flask_app_alerts
+    rules:
+      - alert: HighRequestCount
+        expr: flask_requests_total > 100
+        for: 5s
+        labels:
+          severity: critical
+        annotations:
+          summary: "High number of requests to Flask App"
+          description: "The number of requests to flask app exceeded 100 in the last minute."
 
-# Access Prometheus
-You can now login to `http://IP_Address:9090` to access Prometheus GUI.
-If you can't access the page it can be either because prometheus service is not started or port is not allowed from outside world.
-
-# Commands to open firewall ports on centos 7
-- Check ports which are allowed
-```
-sudo firewall-cmd --zone=public --list-ports
-```
-- Allow 9090 port
-```
-sudo firewall-cmd --zone=public --add-port=9090/tcp --permanent
-sudo firewall-cmd --reload
-```
+  - name: test-alert
+    rules:
+      - alert: HostDown
+        expr: up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance {{ $labels.instance }} is down"
+          description: "Application is down."
+  ```
+**recording_rules.yml**
+Recording rules in Prometheus help to precompute and store complex or frequently-used expressions as new time series. This improves performance and makes alerts and dashboards faster and more efficient.
+ ```
+- name: flask_app_recording_rules
+  rules:
+    - record: flask_request_rate
+      expr: rate(flask_requests_total[5m])
+  ```
