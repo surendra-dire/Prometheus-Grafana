@@ -179,7 +179,7 @@ sudo systemctl status alertmanager
 # Acess alert manager at port 9093. Ensure port 9093 is open in firewall.
 http://<your-server-ip>:9093
 
-# Connect Prometheus to Alertmanager
+# Connect Prometheus to Alertmanager - update prometheus.yml
 alerting:
   alertmanagers:
   - static_configs:
