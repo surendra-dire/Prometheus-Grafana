@@ -269,8 +269,8 @@ groups:
           summary: "Instance {{ $labels.instance }} is down"
           description: "Application is down."
   ```
-**recording_rules.yml**
-Recording rules in Prometheus help to precompute and store complex or frequently-used expressions as new time series. This improves performance and makes alerts and dashboards faster and more efficient.
+**recording_rules.yml**  
+Recording rules in Prometheus help to precompute and store complex or frequently-used expressions as new time series. This improves performance and makes alerts and dashboards faster and more efficient.  
  ```
 - name: flask_app_recording_rules
   rules:
