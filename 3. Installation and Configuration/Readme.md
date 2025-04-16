@@ -169,8 +169,14 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 
-# Reload Daemon service and enable prometheus to start post reboot
+# Connect Prometheus to Alertmanager - Add target for alertmanager -update prometheus.yml. Restart Prometheus.
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - 'localhost:9093'
 
+# Reload Daemon service and enable alartmanager to start post reboot
 sudo systemctl daemon-reload
 sudo systemctl enable alertmanager
 sudo systemctl start alertmanager
@@ -179,12 +185,7 @@ sudo systemctl status alertmanager
 # Acess alert manager at port 9093. Ensure port 9093 is open in firewall.
 http://<your-server-ip>:9093
 
-# Connect Prometheus to Alertmanager - update prometheus.yml
-alerting:
-  alertmanagers:
-  - static_configs:
-    - targets:
-      - 'localhost:9093'
+
 ```
 
 ## Configuration files
