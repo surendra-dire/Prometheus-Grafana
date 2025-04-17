@@ -104,9 +104,9 @@ sudo mkdir -p /var/lib/alertmanager
 ```
 [alertmanager.yml]
 
-# The main components in this file are: global (inherited by receivers), route (how alerts are grouped, routed, and sent), receivers  
-(destinations like email, Slack, PagerDuty, etc.), inhibit_rules (suppress alerts under certain conditions to avoid noise), and
-templates (custom formatting of alert notifications).
+# The main components in this file are: global (inherited by receivers), route (how alerts are grouped, routed, and sent),
+receivers (destinations like email, Slack, PagerDuty, etc.), inhibit_rules (suppress alerts under certain conditions to avoid noise),
+and templates (custom formatting of alert notifications).
 
 sudo mkdir -p /etc/alertmanager
 sudo nano /etc/alertmanager/alertmanager.yml
