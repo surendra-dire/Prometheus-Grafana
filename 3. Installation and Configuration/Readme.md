@@ -102,7 +102,7 @@ sudo mv alertmanager-0.28.1.linux-amd64/alertmanager alertmanager-0.28.1.linux-a
 sudo mkdir -p /var/lib/alertmanager
 ```
 ```
-**alertmanager.yml**
+[alertmanager.yml]
 
 # The main components in this file are: global (inherited by receivers), route (how alerts are grouped, routed, and sent), receivers  
 (destinations like email, Slack, PagerDuty, etc.), inhibit_rules (suppress alerts under certain conditions to avoid noise), and
