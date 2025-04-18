@@ -274,11 +274,80 @@ groups:
           summary: "Instance {{ $labels.instance }} is down"
           description: "Application is down."
   ```
-**recording_rules.yml**  
-Recording rules in Prometheus help to precompute and store complex or frequently-used expressions as new time series. This improves performance and makes alerts and dashboards faster and more efficient.  
  ```
-- name: flask_app_recording_rules
-  rules:
-    - record: flask_request_rate
-      expr: rate(flask_requests_total[5m])
+# Check and apply new config
+prometheus --config.file=/etc/prometheus/prometheus.yml
+curl -X POST http://<prometheus-server>:9090/-/reload
+[OR]
+sudo systemctl restart prometheus
+ ```
+
+ ```
+**recording_rules.yml**  
+A recording rule lets you precompute and store the result of a PromQL expression ( complex or frequently-used) so Prometheus doesn’t have to recalculate it over and over again. This improves performance and makes alerts and dashboards faster and more efficient.  Here is an example -to check how many total requests per second over the last minute flask app is handling.
+
+groups:
+  - name: flask_app_recording_rules
+    rules:
+      - record: flask_app:requests_per_minute                 # name of the new saved metric
+        expr: sum(rate(flask_requests_total[1m]))             # PromQL expression you want to save the result of
+        labels:
+          app: flask_app                                      # optional extra labels to tag the new metric
+ ```
+
+ ```
+# Check and apply new config
+prometheus --config.file=/etc/prometheus/prometheus.yml
+curl -X POST http://<prometheus-server>:9090/-/reload
+[OR]
+sudo systemctl restart prometheus
+ ```
+
   ```
+flask_app:requests_per_minute :
+With recording rule, you can just use this alert in alertmanager, prometheus and grafana. It comes with level "app="flask_app".Update the alerts.route.yml with below:  
+ ```
+ ```
+groups:  
+  - name: flask_app_alerts (HighRequestRate)
+    rules:  
+      - alert: HighRequestRate  
+        expr: flask_app:requests_per_minute > 10  
+        for: 30s  
+        labels:  
+          severity: warning  
+        annotations:  
+          summary: "High request rate on Flask App"  
+          description: "The request rate has been above 10 rps for more than 30 seconds."  
+ ```
+Verify the alert in alert manager.  
+
+
+ Before (without recording rule):  
+ sum(rate(flask_requests_total[1m]))  
+
+After:   
+flask_app:requests_per_minute  
+
+
+
+
+
+
+
+
+
+
+ ```
+Note : Prometheous config file folder structure for the reference
+
+prometheus-project/
+├── prometheus.yml                   # Prometheus main config
+├── alertmanager/
+│   └── alertmanager.yml            # Alertmanager config
+├── rules/
+│   ├── alerts.route.yml            # Your alerting rules
+│   └── recording.rules.yml         # Your recording rules
+├── data/                            # (Optional) Prometheus storage location
+└── docker-compose.yml              # (Optional) to run with Docker
+ ```
