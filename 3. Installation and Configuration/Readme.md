@@ -367,3 +367,8 @@ prometheus-project/
 ├── data/                            # (Optional) Prometheus storage location
 └── docker-compose.yml              # (Optional) to run with Docker
  ```
+
+
+**How to secure prometheus and grafana ????**:  
+It defines routing rules for how alerts are grouped and sent to different receivers (/etc/prometheus/alert.rules.yml)
+```
