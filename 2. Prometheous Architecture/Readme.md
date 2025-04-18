@@ -20,7 +20,8 @@ displays the results, and can trigger alerts.
 | **Push support**                  | Push time-series data via an intermediary gateway for batch jobs.               |
 | **Service discovery**             | Automatic target discovery or static configuration.                             |
 | **Graphing & dashboarding**       | Integrates with tools like Grafana for visualization.                           |
-| **Federation**                    | Supports both hierarchical and horizontal federation for scalability.           |
+| **Federation**                    | Supports both hierarchical and horizontal federation for scalability / multi-node architectures support          |
+
 
 
 ## 💡Architecture overview
