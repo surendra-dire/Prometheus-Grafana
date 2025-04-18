@@ -284,7 +284,10 @@ sudo systemctl restart prometheus
 
  ```
 **recording_rules.yml**  
-A recording rule lets you precompute and store the result of a PromQL expression ( complex or frequently-used) so Prometheus doesn’t have to recalculate it over and over again. This improves performance and makes alerts and dashboards faster and more efficient.  Here is an example -to check how many total requests per second over the last minute flask app is handling.
+A recording rule lets you precompute and store the result of a PromQL expression ( complex or frequently-used) so Prometheus
+doesn’t have to recalculate it over and over again. This improves performance and makes alerts and dashboards faster and more
+efficient.
+Here is an example -to check how many total requests per second over the last minute flask app is handling.
 
 groups:
   - name: flask_app_recording_rules
@@ -305,7 +308,8 @@ sudo systemctl restart prometheus
 
   ```
 flask_app:requests_per_minute :
-With recording rule, you can just use this alert in alertmanager, prometheus and grafana. It comes with level "app="flask_app".Update the alerts.route.yml with below:  
+With recording rule, you can just use this alert in alertmanager, prometheus and grafana. It comes with level "app="flask_app".
+Update the alerts.route.yml with below:  
  ```
  ```
 groups:  
@@ -320,21 +324,9 @@ groups:
           summary: "High request rate on Flask App"  
           description: "The request rate has been above 10 rps for more than 30 seconds."  
  ```
-Verify the alert in alert manager.  
+Verify the alert is shown in alertmanager.  
 
-
- Before (without recording rule):  
- sum(rate(flask_requests_total[1m]))  
-
-After:   
-flask_app:requests_per_minute  
-
-
-
-
-
-
-
+Note:  **Before** (without recording rule):   sum(rate(flask_requests_total[1m]))   **After**:  flask_app:requests_per_minute  
 
 
 
