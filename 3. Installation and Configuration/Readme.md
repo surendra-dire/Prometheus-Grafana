@@ -68,7 +68,9 @@ sudo systemctl start prometheus
 docker run --name prometheus -d -p 9090:9090 prom/prometheus  
 
 ### Helm charts  
-Helm is a package manager for Kubernetes applications, and Helm charts are the packages containing the manifest files. Helm simplifies the deployment and management of applications within a Kubernetes cluster.  To install Prometheus, the Kubernetes (K8s) cluster should be up and running, and Helm should be installed.  
+Helm is a package manager for Kubernetes applications, and Helm charts are the packages containing the manifest files. Helm simplifies the deployment and management of applications within a Kubernetes cluster.  To install Prometheus, the Kubernetes (K8s) cluster should be up and running, and Helm should be installed. 
+
+**Prometheus**
 
 ```
 #Install Helm  
@@ -85,6 +87,28 @@ helm install prometheus prometheus-community/prometheus --namespace monitoring
 
 #Access Prometheus Web UI via port forwarding   
 kubectl port-forward svc/prometheus-server -n monitoring 9090:80
+```
+**Grafana**
+```
+#Install Helm  
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash  
+helm version  
+
+#Add the Grafana Helm Chart Repository  
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+
+#Install Grafana  
+kubectl create namespace monitoring   
+helm install grafana grafana/grafana --namespace monitoring
+
+# Retrieve the Admin Password
+kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+#Access Prometheus Web UI via port forwarding or expose prometheous server on nodeport service
+kubectl port-forward --namespace monitoring svc/grafana 3000:80
+                [or]
+
 ```
 ## 💡Installation - Alertmanager [ubuntu]
 ```
