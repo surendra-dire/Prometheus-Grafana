@@ -99,16 +99,19 @@ Grafana is a powerful dashboard and visualization tool that integrates with Prom
 **API Clients**  
 Users are allowed to interact programmatically with Prometheus through its HTTP API to fetch data, query metrics, and integrate Prometheus with other applications like Grafana, Alertmanager, service meshes, API gateways, etc.
 
-**Scalability and Backup/Restore**
+**Scalability**
 Prometheus is a single-node system by design but federation is one way to implement a multi-node setup for scalability, data partitioning, or centralized views. Federation in Prometheus means that one Prometheus server scrapes
-selected metrics from another Prometheus server. Prometheus supports multinode architecture.
+selected metrics from another Prometheus server. Prometheus supports multinode architecture via federation.
 
+**Backup/Restore**
 For backup, either stop Prometheus server and copy data or take the snapshot without stoping the server.
 ```
 systemctl stop prometheus
 cp -r /var/lib/prometheus /path/to/backup/location
 systemctl start Prometheus
 [or]
-Take the snapshot. In case cloud, take backup of the volume. 
+Take the snapshot. In case cloud, take backup of the volume.
+
+Note: Upload Prometheus data to cloud remote object storage, like AWS S3, Google Cloud Storage, or Azure Blob Storage, for long-term storage, redundancy, and global access. This can be achieved using tools like Thanos, Cortex, and VictoriaMetrics.
 ```
 
