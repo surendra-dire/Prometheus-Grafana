@@ -1,6 +1,37 @@
 
 
+
+=============================================================================================================
+Best practises / challanges / hwo to fugure out most inposrtant metrics - approach (based on application logs ?)
+1. not too much metrics calculation
+2. less and meaningful level name
+3. secured
+4. push gateway - data cleaning, minimum use or find alternative like cloud watch have lambda logs
+5. 
+
+================================
 **How to secure prometheus and grafana ?? how to give acccess to users ??**
+
+Enable TLS Encryption
+Implement Basic Authentication
+Restrict Network Access
+Securing Grafana
+ Enable Authentication
+Implement Role-Based Access Control (RBAC)
+Assign Permissions to Dashboards and Folders
+
+Managing User Access
+. Create and Manage Users
+Use Teams for Group Management
+Audit User Activities
+
+✅ Best Practices Summary
+Prometheus: Use a reverse proxy with TLS and Basic Authentication to secure access.​
+
+Grafana: Implement authentication methods and utilize RBAC for fine-grained access control.​
+Grafana Labs
+
+User Management: Cre
 
 ===============================
 surendra.eu.pagerduty.com
