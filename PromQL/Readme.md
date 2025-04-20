@@ -1,4 +1,20 @@
+1. Do we just need (in k8s) . kuse state metrics + node expoerter + app specifc exporter  ? any thing else 
 
+ Why Use Both?
+Using both Kube-State-Metrics and Node Exporter provides a comprehensive view of your Kubernetes environment:​
+Spacelift
++1
+Saifeddine Rajhi
++1
+
+Kube-State-Metrics offers insights into the state and configuration of Kubernetes resources.​
+
+Node Exporter provides data on the health and performance of the underlying infrastructure.​
+
+Together, they enable you to monitor both the application layer (Kubernetes resources) and the infrastructure layer (nodes), facilitating proactive management and troubleshooting. 
+================================
+please tell me the name of metrices for  Cluster Level Monitoring,NameSpace Level Monitoring 
+,Node Level Monitoring , SetUp Grafana Dashboard on Persistent Volume (PVC Disk) Level Monitoring 
 
 
 =============================================================================================================
