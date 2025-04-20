@@ -7,7 +7,7 @@
 
 There are various ways of installing Prometheus : Precompiled binaries, Docker images, helm charts (for k8s) etc.
 
-### Precompiled binaries
+### Using binary package
 Download the Long-Term Support (LTS) binary, extract it, move the files to the /bin directory, and set up Prometheus to run as a service by creating the Prometheus user and updating the systemd service file. Precompiled binaries for released versions are available in the [*download* section](https://prometheus.io/download/) on [prometheus.io](https://prometheus.io).
  
 ```
@@ -64,10 +64,10 @@ sudo systemctl start prometheus
 
 # Ensure port 9090 is open in firewall
 ```
-### Docker images
+### Using Docker images
 docker run --name prometheus -d -p 9090:9090 prom/prometheus  
 
-### Helm charts  
+### Using Helm charts  
 Helm is a package manager for Kubernetes applications, and Helm charts are the packages containing the manifest files. Helm simplifies the deployment and management of applications within a Kubernetes cluster.  To install Prometheus, the Kubernetes (K8s) cluster should be up and running, and Helm should be installed. 
 
 **Prometheus**
