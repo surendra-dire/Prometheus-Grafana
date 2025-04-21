@@ -32,8 +32,8 @@ Service that listens to the Kubernetes API server and generates metrics about th
 | **Memory usage**             | sum(container_memory_usage_bytes{pod="your-pod-name", namespace="your-namespace"})        |
 | **Memory resource limit**    |sum(kube_pod_container_resource_limits_memory_bytes{pod="nginx-pod", namespace="default"}) |
 
-[Readiness/liveness]
-| **Readiness/liveness**         | **Metric**                                                                                |
+[Readiness/Liveness]
+| **Readiness/Liveness**         | **Metric**                                                                                |
 |--------------------------------|-------------------------------------------------------------------------------------------|
 | **Readiness**                  | kube_pod_status_ready{namespace="default", pod="nginx-pod"}                               |
 | **Liveness**                   | kube_pod_container_status_restarts_total                                              |
