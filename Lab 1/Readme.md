@@ -8,7 +8,6 @@ There are a variety of **exporters** available to monitor different aspects of a
 | **cAdvisor**                      | A powerful query language for flexible data analysis.|A powerful query language for flexible data analysis.|   
 | **Node exporter**                 | Single server nodes with no distributed storage dependency|Single server nodes with no distributed storage dependency.|    
 
-
 # 💡Metrics
 
 ## kube-state-metrics (KSM) 
@@ -24,19 +23,26 @@ Service that listens to the Kubernetes API server and generates metrics about th
 | **Succeeded**  | `kube_pod_status_phase{phase="Succeeded", namespace="production", pod="my-app-*"}` |
 | **Unknown**    | `kube_pod_status_phase{phase="Unknown", namespace="production", pod="my-app-*"}` |
 
-[Pod Resource Usage]
-| **POD Resources** | **Metric** |
-|----------------|---------------------------------------------------------------------------------------------------------|
-| **CPU usage**                | rate(container_cpu_usage_seconds_total{image!=""}[5m])                                    |
-| **CPU resource limit**       | kube_pod_container_resource_limits_cpu_cores                                              |
-| **Memory usage**             | sum(container_memory_usage_bytes{pod="your-pod-name", namespace="your-namespace"})        |
-| **Memory resource limit**    |sum(kube_pod_container_resource_limits_memory_bytes{pod="nginx-pod", namespace="default"}) |
-
 [Readiness/Liveness]
 | **Readiness/Liveness**         | **Metric**                                                                                |
 |--------------------------------|-------------------------------------------------------------------------------------------|
 | **Readiness**                  | kube_pod_status_ready{namespace="default", pod="nginx-pod"}                               |
-| **Liveness**                   | kube_pod_container_status_restarts_total                                              |
+| **Liveness**                   | kube_pod_container_status_restarts_total                                                  |
+
+## cAdvisor metrics
+[Resource Usage]
+| **POD Status** | **Metric** |
+|----------------|--------------------------------------------------------------|
+| **CPU usage (container)**             |`rate(container_cpu_usage_seconds_total{image!=""}[5m])` |
+| **CPU resource limit(container)**     | `kube_pod_container_resource_limits_cpu_cores{namespace="production", pod=~"my-app-.*"}` |
+| **CPU usage (pod)**                   |`sum by (pod) (rate(container_cpu_usage_seconds_total{image!=""}[5m]))` |
+| **CPU resource limit(pod)**           | `sum by (pod) (kube_pod_container_resource_limits_cpu_cores{namespace="production", pod=~"my-app-.*"})` |
+| **CPU usage (Node)**                  |`sum by (node) (rate(container_cpu_usage_seconds_total{image!=""}[5m]))` |
+| **CPU resource limit(Node)**          | `sum by (node) (kube_pod_container_resource_limits_cpu_cores)` |
+
+
+
+
 
 
 
