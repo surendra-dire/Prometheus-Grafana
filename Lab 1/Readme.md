@@ -4,9 +4,29 @@
 There are a variety of **exporters** available to monitor different aspects of a Kubernetes cluster and the applications deployed on it
 | **Exporter**                      | **Area**                             | **Monitors**                         |  
 |-----------------------------------|--------------------------------------|--------------------------------------|  
-| **Kube State metrics**            |  K8s object state                    |Monitors the desired state of k8s objects|  
-| **cAdvisor**                      | A powerful query language for flexible data analysis.|A powerful query language for flexible data analysis.|   
-| **Node exporter**                 | Single server nodes with no distributed storage dependency|Single server nodes with no distributed storage dependency.|    
+| **Kube State metrics**            | collects metrices for k8s objects (pod/deployment/replicaset etc.) desired state|
+| **cAdvisor**                      | cAdvisor collects only container level metrices (cAdvisor doesn't collect pod-specific metrics but the data it provides can be used to derive pod-level insights by aggregating the metrics for all containers in the pod.|   
+| **Node exporter**                 | Node Exporter collects only on hardware and node-level metrics (CPU, memory, disk I/O, network, etc.)|    
+| **Kubelet mertics**               | Node Exporter focuses on hardware and node-level statistics (CPU, memory, disk I/O, network, etc.) for the entire node, not specific to any container or pod.|    
+
+
+Note: cAdvisor is part of Kubelet mertics. Kubelet metrics are restricted in managed k8s cluster due to security. AWS (like other cloud providers) restricts direct node access to protect node internals, and the Kubelet is part of that.CloudWatch Container Insights us suggested.Run standalone cAdvisor as a DaemonSet.
+
+Node Exporter focuses on hardware and node-level statistics (CPU, memory, disk I/O, network, etc.) for the entire node, not specific to any container or pod.
+
+cAdvisor, on the other hand, collects container-level metrics (such as disk I/O, CPU usage, memory usage) for individual containers running on a node.
+
+Node Exporter Does Not Collect Pod or Container-Level Metrics. Node Exporter gathers system-wide statistics like CPU, memory, disk I/O, network usage, and filesystem metrics.
+
+Node level metrics:
+Example Alerts:
+High CPU usage: node_cpu_seconds_total{mode="user"} > 80% for 5 minutes.
+Memory usage: node_memory_MemAvailable_bytes < 10% of total memory.
+Disk space: node_filesystem_free_bytes{mountpoint="/"} < 10% of total disk space.
+Network errors: rate(node_network_receive_errs_total[5m]) > 10.
+
+
+
 
 # 💡Metrics
 
@@ -31,6 +51,8 @@ The readiness probe answers 'Can the pod serve traffic?' while the liveness prob
 | **Liveness Probe falling**     | `rate(kube_pod_container_status_restarts_total{namespace="default", pod="nginx-pod"}[5m]) [OR] kube_pod_container_status_waiting_reason{namespace="default", pod="nginx-pod", reason="CrashLoopBackOff"}`|
 
 ## cAdvisor metrics
+It collects container-level metrics such as CPU, memory, network, and disk I/O usage. While cAdvisor collects metrics on containers, it does not directly provide metrics for pods themselves. However, you can still aggregate container-level metrics and associate them with pods based on their container membership.
+
 [Resource Usage]  
 [CPU]
 | **POD Status** | **Metric** |
@@ -55,6 +77,23 @@ The readiness probe answers 'Can the pod serve traffic?' while the liveness prob
 | **Memory resource limit (Node)**          | `sum by (node) (kube_pod_container_resource_limits_memory_bytes)` |
 
 
+## kubelet metrics
+**node-level metric:**  
+[Volume]  
+| **Node volume **                            | **Metric** |
+|-------------------------------------|--------------------------------------------------------------|
+| **Volume total**                    | `kubelet_volume_stats_capacity_bytes`  |
+| **Volume available**                | `kubelet_volume_stats_available_bytes` |
+| **Volume usage**                    | `kubelet_volume_stats_used_bytes` |
+Example : kubelet_volume_stats_available_bytes{node="node1", pod="pod-xyz", namespace="default", persistentvolumeclaim="my-pvc"} --->  available bytes for the volume mounted by the pod pod-xyz in the default namespace, running on node1
+
+**node-level metric:**  
+[Disk I/O]  
+| **Node volume **                            | **Metric** |
+|-------------------------------------------|--------------------------------------------------------------|
+| **Volume total**                    | `kubelet_volume_stats_capacity_bytes`  |
+| **Volume available**                | `kubelet_volume_stats_available_bytes` |
+| **Disk I/O**                        | `sum by (pod) (kube_pod_container_resource_limits_memory_bytes{namespace="production", pod=~"my-app-.*"})` |
 
 
 
@@ -62,11 +101,8 @@ The readiness probe answers 'Can the pod serve traffic?' while the liveness prob
 
 
 
-
-
-
-
-
+volume usage > 90%
+expr: kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes * 100 > 90
  ` ` `
 | Resource Misconfiguration                                               |                                                                                   |
 | └─ No CPU Limit                                                         | `kube_pod_container_resource_limits_cpu_cores == 0`                               |
