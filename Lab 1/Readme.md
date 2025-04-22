@@ -11,7 +11,7 @@ There are a variety of **exporters** available to monitor different aspects of a
 # 💡Metrics
 
 ## kube-state-metrics (KSM) 
-Service that listens to the Kubernetes API server and generates metrics about the state of the resources (e.g., deployments, nodes, pods, etc.). It exposes them at an HTTP endpoint, usually on /metrics, for Prometheus to scrape.KSM focuses on cluster desired state.  
+A service that listens to the Kubernetes API server and exports Kubernetes cluster state metrics.
 
 **Pods Level Metrices:**   
 [Pod life cycle status]
@@ -24,10 +24,11 @@ Service that listens to the Kubernetes API server and generates metrics about th
 | **Unknown**    | `kube_pod_status_phase{phase="Unknown", namespace="production", pod="my-app-*"}` |
 
 [Readiness/Liveness]
+While readiness probe answers "Can the pod serve traffic?" and Liveness prob answers "Is the pod alive or should be restarted?"
 | **Readiness/Liveness**         | **Metric**                                                                                |
 |--------------------------------|-------------------------------------------------------------------------------------------|
-| **Readiness**                  | kube_pod_status_ready{namespace="default", pod="nginx-pod"}                               |
-| **Liveness**                   | kube_pod_container_status_restarts_total                                                  |
+| **Readiness Prob Failing**     | `kube_pod_status_ready{namespace="default", pod="nginx-pod", condition="true"} == 0 `     |
+| **Liveness Probe falling**     | `rate(kube_pod_container_status_restarts_total{namespace="default", pod="nginx-pod"}[5m]) [OR] kube_pod_container_status_waiting_reason{namespace="default", pod="nginx-pod", reason="CrashLoopBackOff"}`|
 
 ## cAdvisor metrics
 [Resource Usage]
