@@ -23,24 +23,36 @@ A service that listens to the Kubernetes API server and exports Kubernetes clust
 | **Succeeded**  | `kube_pod_status_phase{phase="Succeeded", namespace="production", pod="my-app-*"}` |
 | **Unknown**    | `kube_pod_status_phase{phase="Unknown", namespace="production", pod="my-app-*"}` |
 
-[Readiness/Liveness]
-While readiness probe answers "Can the pod serve traffic?" and Liveness prob answers "Is the pod alive or should be restarted?"
+[Readiness/Liveness]  
+The readiness probe answers 'Can the pod serve traffic?' while the liveness probe answers 'Is the pod alive, or should it be restarted?
 | **Readiness/Liveness**         | **Metric**                                                                                |
 |--------------------------------|-------------------------------------------------------------------------------------------|
 | **Readiness Prob Failing**     | `kube_pod_status_ready{namespace="default", pod="nginx-pod", condition="true"} == 0 `     |
 | **Liveness Probe falling**     | `rate(kube_pod_container_status_restarts_total{namespace="default", pod="nginx-pod"}[5m]) [OR] kube_pod_container_status_waiting_reason{namespace="default", pod="nginx-pod", reason="CrashLoopBackOff"}`|
 
 ## cAdvisor metrics
-[Resource Usage]
+[Resource Usage]  
+[CPU]
 | **POD Status** | **Metric** |
 |----------------|--------------------------------------------------------------|
 | **CPU usage (container)**             |`rate(container_cpu_usage_seconds_total{image!=""}[5m])` |
 | **CPU resource limit(container)**     | `kube_pod_container_resource_limits_cpu_cores{namespace="production", pod=~"my-app-.*"}` |
 | **CPU usage (pod)**                   |`sum by (pod) (rate(container_cpu_usage_seconds_total{image!=""}[5m]))` |
 | **CPU resource limit(pod)**           | `sum by (pod) (kube_pod_container_resource_limits_cpu_cores{namespace="production", pod=~"my-app-.*"})` |
+| **CPU no resource limit(pod)**        | `kube_pod_container_resource_limits_cpu_cores == 0` |
 | **CPU usage (Node)**                  |`sum by (node) (rate(container_cpu_usage_seconds_total{image!=""}[5m]))` |
 | **CPU resource limit(Node)**          | `sum by (node) (kube_pod_container_resource_limits_cpu_cores)` |
 
+[Memory]  
+| **POD Status**                            | **Metric** |
+|-------------------------------------------|--------------------------------------------------------------|
+| **Memory usage (container)**              | `rate(container_memory_usage_bytes{image!=""}[5m])` |
+| **Memory resource limit (container)**     | `kube_pod_container_resource_limits_memory_bytes{namespace="production", pod=~"my-app-.*"}` |
+| **Memory usage (pod)**                    | `sum by (pod) (rate(container_memory_usage_bytes{image!=""}[5m]))` |
+| **Memory resource limit (pod)**           | `sum by (pod) (kube_pod_container_resource_limits_memory_bytes{namespace="production", pod=~"my-app-.*"})` |
+| **Memory no resource limit (pod)**        | `kube_pod_container_resource_limits_memory_bytes == 0` |
+| **Memory usage (Node)**                   | `sum by (node) (rate(container_memory_usage_bytes{image!=""}[5m]))` |
+| **Memory resource limit (Node)**          | `sum by (node) (kube_pod_container_resource_limits_memory_bytes)` |
 
 
 
@@ -55,7 +67,7 @@ While readiness probe answers "Can the pod serve traffic?" and Liveness prob ans
 
 
 
-
+ ` ` `
 | Resource Misconfiguration                                               |                                                                                   |
 | └─ No CPU Limit                                                         | `kube_pod_container_resource_limits_cpu_cores == 0`                               |
 | └─ No Memory Request                                                    | `kube_pod_container_resource_requests_memory_bytes == 0`                          |
@@ -80,7 +92,7 @@ increase(kube_pod_container_status_restarts_total[5m]) > 3
 
 
 
-
+```
 ------------------------------------
 - alert: HighMemoryUsagePod
   expr: (sum(container_memory_usage_bytes{pod="nginx-pod", namespace="default"}) 
@@ -112,4 +124,5 @@ increase(kube_pod_container_status_restarts_total[5m]) > 3
     summary: "Pod nginx-pod in the default namespace is not ready for more than 5 minutes."
     description: "The pod nginx-pod is not ready and is not receiving traffic."
 
--------------
+-------------  ` ` `
+```
