@@ -6,8 +6,8 @@ There are a variety of **exporters** available to monitor different aspects of a
 |-----------------------------------|--------------------------------------|--------------------------------------|  
 | **Kube State metrics**            | collects metrices for k8s objects (pod/deployment/replicaset etc.) desired state|
 | **cAdvisor**                      | cAdvisor collects only container level metrices (cAdvisor doesn't collect pod-specific metrics but the data it provides can be used to derive pod-level insights by aggregating the metrics for all containers in the pod.|   
-| **Node exporter**                 | Node Exporter collects only on hardware and node-level metrics (CPU, memory, disk I/O, network, etc.)|    
-| **Kubelet mertics**               | Node Exporter focuses on hardware and node-level statistics (CPU, memory, disk I/O, network, etc.) for the entire node, not specific to any container or pod.|    
+| **Node exporter**                 | Node Exporter collects only node or host level metrics (CPU, memory, disk I/O, network, etc.) at the hardware and operating system level|    
+| **Kubelet mertics**               | |    
 
 
 Note: cAdvisor is part of Kubelet mertics. Kubelet metrics are restricted in managed k8s cluster due to security. AWS (like other cloud providers) restricts direct node access to protect node internals, and the Kubelet is part of that.CloudWatch Container Insights us suggested.Run standalone cAdvisor as a DaemonSet.
